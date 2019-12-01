@@ -1,16 +1,24 @@
 import React from 'react';
+import { Route, HashRouter as Router, Link } from 'react-router-dom';
+
+import { CustomerListContainer } from 'components/CustomerListContainer';
+import { About } from 'components/About';
+import './styles.scss';
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-          Learn React
-        </a>
-      </header>
+    <div id="container">
+      <Router>
+        <header>
+          <nav>
+            <p id="title">
+              <Link to="/">Customer List</Link>
+            </p>
+          </nav>
+        </header>
+        <Route exact path="/" component={CustomerListContainer} />
+        <Route exact path="/about" component={About} />
+      </Router>
     </div>
   );
 };
