@@ -7,17 +7,21 @@ header {
   nav {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     width: 95%;
     max-width: 1140px;
 
-    #title {
+    div {
       margin: 0;
-      font-weight: 700;
 
       a {
         color: white;
         text-decoration: none;
       }
+    }
+
+    #title {
+      font-weight: 700;
     }
   }
 }

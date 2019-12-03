@@ -11,9 +11,12 @@ const App: React.FC = () => {
       <Router>
         <header>
           <nav>
-            <p id="title">
+            <div id="title">
               <Link to="/">Customer List</Link>
-            </p>
+            </div>
+            <div>
+              <Link to="/about">About</Link>
+            </div>
           </nav>
         </header>
         <Route exact path="/" component={CustomerListContainer} />
