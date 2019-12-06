@@ -1,24 +1,18 @@
 import React from 'react';
-import { Route, HashRouter as Router, Link } from 'react-router-dom';
+import { Route, HashRouter as Router, Redirect } from 'react-router-dom';
 
 import { CustomerListContainer } from 'components/CustomerListContainer';
 import { About } from 'components/About';
-import './styles.scss';
+import { Header } from 'components/Header';
 
 const App: React.FC = () => {
   return (
     <div id="container">
       <Router>
-        <header>
-          <nav>
-            <Link id="title" to="/">
-              Customer List
-            </Link>
-            <Link to="/about">About</Link>
-          </nav>
-        </header>
-        <Route exact path="/" component={CustomerListContainer} />
-        <Route exact path="/about" component={About} />
+        <Header />
+        <Route exact path="/" render={() => <Redirect to="/customer-list" />} />
+        <Route path="/customer-list" component={CustomerListContainer} />
+        <Route path="/about" component={About} />
       </Router>
     </div>
   );
