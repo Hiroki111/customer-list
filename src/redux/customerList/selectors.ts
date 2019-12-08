@@ -9,3 +9,8 @@ export const getIsLoadingCustomers = createSelector(
   personsSelector,
   state => state.status.fetchingCustomers === 'PENDING'
 );
+
+export const getFailedToLoadCustomers = createSelector(
+  personsSelector,
+  state => state.status.fetchingCustomers === 'FAILED'
+);

@@ -1,11 +1,17 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-import LoadingSpinner from 'components/LoadingSpinner';
 import { Hoc, IHocProps } from 'components/CustomerListContainer/CustomerList/hoc';
+import LoadingSpinner from 'utils/LoadingSpinner';
+import MessageBox from 'utils/MessageBox';
 
-const CustomerList = ({ customers, isLoadingCustomers }: IHocProps) => {
+const CustomerList = ({ customers, isLoadingCustomers, failedToLoadCustomers }: IHocProps) => {
   if (isLoadingCustomers) {
     return <LoadingSpinner />;
+  }
+
+  if (failedToLoadCustomers) {
+    return <MessageBox message={'Due to an internal error, customers were not loaded. Please try again later.'} />;
   }
 
   return (
