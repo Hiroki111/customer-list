@@ -1,7 +1,13 @@
 import React from 'react';
+
+import LoadingSpinner from 'components/LoadingSpinner';
 import { Hoc, IHocProps } from 'components/CustomerListContainer/CustomerList/hoc';
 
-const CustomerList = ({ customers }: IHocProps) => {
+const CustomerList = ({ customers, isLoadingCustomers }: IHocProps) => {
+  if (isLoadingCustomers) {
+    return <LoadingSpinner />;
+  }
+
   return (
     <ul className="customerslist-items">
       {customers.map((customer, i) => (
