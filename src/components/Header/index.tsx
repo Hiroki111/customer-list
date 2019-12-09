@@ -6,7 +6,7 @@ export const Header = () => {
   return (
     <header>
       <nav>
-        <Link id="title" to="/customer-list">
+        <Link id="title" to="/customers">
           Customer List
         </Link>
         <Link to="/about">About</Link>

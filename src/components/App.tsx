@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, HashRouter as Router, Redirect } from 'react-router-dom';
 
-import { CustomerList } from 'components/CustomerList';
+import { Customers } from 'components/Customers';
 import { About } from 'components/About';
 import { Header } from 'components/Header';
 
@@ -10,8 +10,8 @@ const App: React.FC = () => {
     <div id="container">
       <Router>
         <Header />
-        <Route exact path="/" render={() => <Redirect to="/customer-list" />} />
-        <Route path="/customer-list" component={CustomerList} />
+        <Route exact path="/" render={() => <Redirect to="/customers" />} />
+        <Route path="/customers" component={Customers} />
         <Route path="/about" component={About} />
       </Router>
     </div>

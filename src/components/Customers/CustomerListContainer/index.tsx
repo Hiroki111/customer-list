@@ -2,8 +2,8 @@ import React from 'react';
 import arrayMove from 'array-move';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { SortableList } from 'components/CustomerList/SortableList';
-import { Hoc, IHocProps } from 'components/CustomerList/CustomerListContainer/hoc';
+import { CustomerList } from 'components/Customers/CustomerList';
+import { Hoc, IHocProps } from 'components/Customers/CustomerListContainer/hoc';
 import { ICustomer } from 'redux/customerList/interfaces';
 import LoadingSpinner from 'utils/LoadingSpinner';
 import MessageBox from 'utils/MessageBox';
@@ -46,7 +46,7 @@ class CustomerListContainer extends React.Component<IHocProps, ICustomerListStat
     }
 
     return (
-      <SortableList
+      <CustomerList
         customers={customers}
         onSortEnd={({ oldIndex, newIndex }) => this.onSortEnd({ oldIndex, newIndex })}
         distance={1}
