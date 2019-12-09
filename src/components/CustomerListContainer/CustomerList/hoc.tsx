@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+
 import { fetchCustomers } from 'redux/customerList/operations';
 import { ICustomer } from 'redux/customerList/interfaces';
 import { getCustomers, getIsLoadingCustomers, getFailedToLoadCustomers } from 'redux/customerList/selectors';
