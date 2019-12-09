@@ -1,13 +1,13 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 
-import { CustomerList } from 'components/CustomerListContainer/CustomerList';
+import { CustomerListContainer } from 'components/CustomerList/CustomerListContainer';
 
-export const CustomerListContainer = () => {
+export const CustomerList = () => {
   return (
     <div>
       <Route exact path="/customer-list/:id" component={() => <div>DETAILS</div>} />
-      <CustomerList />
+      <CustomerListContainer />
     </div>
   );
 };

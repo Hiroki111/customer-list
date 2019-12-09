@@ -2,8 +2,8 @@ import React from 'react';
 import arrayMove from 'array-move';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { SortableList } from 'components/CustomerListContainer/SortableList';
-import { Hoc, IHocProps } from 'components/CustomerListContainer/CustomerList/hoc';
+import { SortableList } from 'components/CustomerList/SortableList';
+import { Hoc, IHocProps } from 'components/CustomerList/CustomerListContainer/hoc';
 import { ICustomer } from 'redux/customerList/interfaces';
 import LoadingSpinner from 'utils/LoadingSpinner';
 import MessageBox from 'utils/MessageBox';
@@ -17,7 +17,7 @@ interface IOnSortEnd {
   newIndex: number;
 }
 
-class CustomerList extends React.Component<IHocProps, ICustomerListState> {
+class CustomerListContainer extends React.Component<IHocProps, ICustomerListState> {
   state = {
     customers: [] as ICustomer[]
   };
@@ -55,6 +55,6 @@ class CustomerList extends React.Component<IHocProps, ICustomerListState> {
   }
 }
 
-const CustomerListConnected = Hoc(CustomerList);
+const CustomerListContainerConnected = Hoc(CustomerListContainer);
 
-export { CustomerListConnected as CustomerList };
+export { CustomerListContainerConnected as CustomerListContainer };
