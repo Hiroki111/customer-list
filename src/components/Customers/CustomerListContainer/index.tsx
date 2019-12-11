@@ -3,6 +3,7 @@ import arrayMove from 'array-move';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { CustomerList } from 'components/Customers/CustomerList';
+import { Pagination } from 'components/Customers/Pagination';
 import { Hoc, IHocProps } from 'components/Customers/CustomerListContainer/hoc';
 import { ICustomer } from 'redux/customerList/interfaces';
 import LoadingSpinner from 'utils/LoadingSpinner';
@@ -46,11 +47,14 @@ class CustomerListContainer extends React.Component<IHocProps, ICustomerListStat
     }
 
     return (
-      <CustomerList
-        customers={customers}
-        onSortEnd={({ oldIndex, newIndex }) => this.onSortEnd({ oldIndex, newIndex })}
-        distance={1}
-      />
+      <>
+        <CustomerList
+          customers={customers}
+          onSortEnd={({ oldIndex, newIndex }) => this.onSortEnd({ oldIndex, newIndex })}
+          distance={1}
+        />
+        <Pagination />
+      </>
     );
   }
 }
