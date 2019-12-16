@@ -44,7 +44,7 @@ const CustomerDetail = ({
             </tr>
             <tr>
               <td className="field-name">Group</td>
-              <td className="data">{customer.group ? customer.group.name : ''}</td>
+              <td className="data">{customer.group ? customer.group.name : 'N/A'}</td>
             </tr>
             <tr>
               <td className="field-name">Note</td>

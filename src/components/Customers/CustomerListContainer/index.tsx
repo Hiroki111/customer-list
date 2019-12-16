@@ -8,6 +8,7 @@ import { Hoc, IHocProps } from 'components/Customers/CustomerListContainer/hoc';
 import { ICustomer } from 'interfaces/models';
 import LoadingSpinner from 'utils/components/LoadingSpinner';
 import MessageBox from 'utils/components/MessageBox';
+import './styles.scss';
 
 interface ICustomerListState {
   customers: ICustomer[];
@@ -47,14 +48,14 @@ class CustomerListContainer extends React.Component<IHocProps, ICustomerListStat
     }
 
     return (
-      <>
+      <div className="customerlistcontainer">
         <CustomerList
           customers={customers}
           onSortEnd={({ oldIndex, newIndex }) => this.onSortEnd({ oldIndex, newIndex })}
           distance={1}
         />
         <Pagination />
-      </>
+      </div>
     );
   }
 }

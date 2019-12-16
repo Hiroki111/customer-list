@@ -1,11 +1,30 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBuilding } from '@fortawesome/free-solid-svg-icons';
 import { SortableElement } from 'react-sortable-hoc';
+import { getInitials } from 'utils';
+import './styles.scss';
 
-const CustomerListItem = ({ name, id }: { name: string; id: number }) => {
+interface ICustomerListItem {
+  id: number;
+  name: string;
+  groupName: string;
+}
+
+const CustomerListItem = ({ id, name, groupName }: ICustomerListItem) => {
   return (
-    <li>
-      <Link to={`/customers/${id}`}>{name}</Link>
+    <li className="customerlistitem">
+      <Link to={`/customers/${id}`}>
+        <div className="customerlistitem-names">
+          <div className="customer-name">{name}</div>
+          <div className="group-name">
+            <FontAwesomeIcon icon={faBuilding} />
+            <span>{groupName}</span>
+          </div>
+        </div>
+        <div className="customerlistitem-icon" data-letters={getInitials(name)}></div>
+      </Link>
     </li>
   );
 };

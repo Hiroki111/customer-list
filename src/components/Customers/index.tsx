@@ -7,13 +7,13 @@ import { CustomerDetail } from 'components/Customers/CustomerDetail';
 export const Customers = () => {
   let history = useHistory();
   return (
-    <div>
+    <>
       <Route
         exact
         path="/customers/:id"
         render={props => <CustomerDetail {...props} handleClose={() => history.push('/customers')} />}
       />
       <CustomerListContainer />
-    </div>
+    </>
   );
 };
