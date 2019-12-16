@@ -8,7 +8,7 @@ const CustomerList = SortableContainer(({ customers }: { customers: ICustomer[] 
   return (
     <ul className="customerslist-items">
       {customers.map((customer, i) => (
-        <CustomerListItem key={i} index={i} name={customer.name} />
+        <CustomerListItem key={i} index={i} name={customer.name} id={customer.id} />
       ))}
     </ul>
   );
