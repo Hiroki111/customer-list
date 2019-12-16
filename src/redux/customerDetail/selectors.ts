@@ -1,6 +1,5 @@
 import { createSelector } from 'reselect';
 import { IState } from 'redux/root';
-import { customerListPageSize } from 'config';
 
 const customerDetailSelector = (state: IState) => state.customerDetail;
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
-import * as _ from 'lodash';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { WithRedux, IWithReduxProps } from 'components/Customers/CustomerDetailModal/withRedux';
 import { getInitials } from 'utils';
