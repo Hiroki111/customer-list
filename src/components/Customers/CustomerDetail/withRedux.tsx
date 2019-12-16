@@ -32,7 +32,7 @@ interface IDispatch {
 export interface IWithReduxProps extends IOwnProps, IReduxProps, IDispatch {}
 
 const WithRedux = (Component: React.ComponentType<IWithReduxProps>) => {
-  class CustomerDetailModal extends React.Component<IWithReduxProps> {
+  class CustomerDetail extends React.Component<IWithReduxProps> {
     render() {
       return <Component {...this.props} />;
     }
@@ -58,9 +58,9 @@ const WithRedux = (Component: React.ComponentType<IWithReduxProps>) => {
     isDeletingCustomer: getIsDeletingCustomer(state)
   });
 
-  const CustomerDetailModalWithRouter = withRouter(CustomerDetailModal);
+  const CustomerDetailWithRouter = withRouter(CustomerDetail);
 
-  return connect(mapStateToProps, mapDispatchToProps)(CustomerDetailModalWithRouter);
+  return connect(mapStateToProps, mapDispatchToProps)(CustomerDetailWithRouter);
 };
 
 export { WithRedux };

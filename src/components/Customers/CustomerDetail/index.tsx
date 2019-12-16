@@ -2,12 +2,12 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { WithRedux, IWithReduxProps } from 'components/Customers/CustomerDetailModal/withRedux';
+import { WithRedux, IWithReduxProps } from 'components/Customers/CustomerDetail/withRedux';
 import { getInitials } from 'utils';
 import LoadingSpinner from 'utils/components/LoadingSpinner';
 import './styles.scss';
 
-const CustomerDetailModal = ({
+const CustomerDetail = ({
   handleClose,
   handleDelete,
   customer,
@@ -84,6 +84,6 @@ const CustomerDetailModal = ({
   );
 };
 
-const CustomerDetailModalWithRedux = WithRedux(CustomerDetailModal);
+const CustomerDetailWithRedux = WithRedux(CustomerDetail);
 
-export { CustomerDetailModalWithRedux as CustomerDetailModal, CustomerDetailModal as DisconnectedCustomerDetailModal };
+export { CustomerDetailWithRedux as CustomerDetail, CustomerDetail as DisconnectedCustomerDetail };
