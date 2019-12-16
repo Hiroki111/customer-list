@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { fetchCustomers } from 'redux/customerList/operations';
 import { deleteCustomer, fetchCustomer } from 'redux/customerDetail/operations';
-import { ICustomer } from 'redux/customerList/interfaces';
+import { ICustomer } from 'interfaces/models';
 import {
   getCustomer,
   getIsLoadingCustomer,

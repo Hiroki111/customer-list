@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { CustomerList } from 'components/Customers/CustomerList';
 import { Pagination } from 'components/Customers/Pagination';
 import { Hoc, IHocProps } from 'components/Customers/CustomerListContainer/hoc';
-import { ICustomer } from 'redux/customerList/interfaces';
+import { ICustomer } from 'interfaces/models';
 import LoadingSpinner from 'utils/components/LoadingSpinner';
 import MessageBox from 'utils/components/MessageBox';
 

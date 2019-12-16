@@ -1,5 +1,5 @@
 import * as types from 'redux/customerList/types';
-import { ICustomer } from 'redux/customerList/interfaces';
+import { ICustomer } from 'interfaces/models';
 
 interface IFetchCustomersResult {
   customers: ICustomer[];

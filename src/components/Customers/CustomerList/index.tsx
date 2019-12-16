@@ -2,7 +2,7 @@ import React from 'react';
 import { SortableContainer } from 'react-sortable-hoc';
 
 import { CustomerListItem } from 'components/Customers/CustomerListItem';
-import { ICustomer } from 'redux/customerList/interfaces';
+import { ICustomer } from 'interfaces/models';
 
 const CustomerList = SortableContainer(({ customers }: { customers: ICustomer[] }) => {
   return (
