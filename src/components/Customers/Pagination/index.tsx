@@ -4,7 +4,7 @@ import ReactPaginate from 'react-paginate';
 import { Hoc, IHocProps } from 'components/Customers/Pagination/hoc';
 import './styles.scss';
 
-const Pagination = ({ fetchCustomers, totalPage, isLoadingCustomers, currentPage }: IHocProps) => {
+const Pagination = ({ totalPage, isLoadingCustomers, currentPage }: IHocProps) => {
   let history = useHistory();
 
   if (isLoadingCustomers || totalPage < 1) return null;
