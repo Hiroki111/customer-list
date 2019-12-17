@@ -11,7 +11,7 @@ interface IReduxProps {
 }
 
 interface IDispatch {
-  handlePageClick: (page: number) => void;
+  fetchCustomers: (page: number) => void;
 }
 
 export interface IHocProps extends IReduxProps, IDispatch {}
@@ -24,7 +24,7 @@ const Hoc = (Component: React.ComponentType<IHocProps>) => {
   }
 
   const mapDispatchToProps = (dispatch: (action: any) => void): IDispatch => ({
-    handlePageClick: (page: number) => dispatch(fetchCustomers(page))
+    fetchCustomers: (page: number) => dispatch(fetchCustomers(page))
   });
 
   const mapStateToProps = (state: IState) => ({

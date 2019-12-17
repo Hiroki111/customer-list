@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { withRouter, RouteComponentProps } from 'react-router';
+import * as qs from 'query-string';
 
 import { fetchCustomers } from 'redux/customerList/operations';
 import { ICustomer } from 'interfaces/models';
@@ -13,10 +15,10 @@ interface IReduxProps {
 }
 
 interface IDispatch {
-  fetchCustomers: () => void;
+  fetchCustomers: (page: number) => void;
 }
 
-export interface IHocProps extends IReduxProps, IDispatch {}
+export interface IHocProps extends RouteComponentProps<{ page: string }>, IReduxProps, IDispatch {}
 
 export const Hoc = (Component: React.ComponentType<IHocProps>) => {
   class CustomerList extends React.Component<IHocProps> {
@@ -25,12 +27,23 @@ export const Hoc = (Component: React.ComponentType<IHocProps>) => {
     }
 
     componentDidMount() {
-      this.props.fetchCustomers();
+      this.updateCustomersFromUrl();
+    }
+
+    componentDidUpdate(prevProps: IHocProps) {
+      if (this.props.location.search !== prevProps.location.search) {
+        this.updateCustomersFromUrl();
+      }
+    }
+
+    updateCustomersFromUrl() {
+      const page = qs.parse(this.props.location.search).page || 1;
+      this.props.fetchCustomers(Number(page));
     }
   }
 
   const mapDispatchToProps = (dispatch: (action: any) => void): IDispatch => ({
-    fetchCustomers: () => dispatch(fetchCustomers())
+    fetchCustomers: (page: number) => dispatch(fetchCustomers(page))
   });
 
   const mapStateToProps = (state: IState) => ({
@@ -39,5 +52,7 @@ export const Hoc = (Component: React.ComponentType<IHocProps>) => {
     failedToLoadCustomers: getFailedToLoadCustomers(state)
   });
 
-  return connect(mapStateToProps, mapDispatchToProps)(CustomerList);
+  const CustomerListWithRouter = withRouter(CustomerList);
+
+  return connect(mapStateToProps, mapDispatchToProps)(CustomerListWithRouter);
 };
