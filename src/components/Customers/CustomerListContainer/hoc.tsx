@@ -27,18 +27,21 @@ export const Hoc = (Component: React.ComponentType<IHocProps>) => {
     }
 
     componentDidMount() {
-      this.updateCustomersFromUrl();
+      this.props.fetchCustomers(this.getPageNuber());
     }
 
     componentDidUpdate(prevProps: IHocProps) {
-      if (this.props.location.search !== prevProps.location.search) {
-        this.updateCustomersFromUrl();
+      if (
+        this.props.location.search !== prevProps.location.search && // page number
+        this.props.location.pathname === prevProps.location.pathname
+      ) {
+        this.props.fetchCustomers(this.getPageNuber());
       }
     }
 
-    updateCustomersFromUrl() {
+    getPageNuber(): number {
       const page = qs.parse(this.props.location.search).page || 1;
-      this.props.fetchCustomers(Number(page));
+      return Number(page);
     }
   }
 

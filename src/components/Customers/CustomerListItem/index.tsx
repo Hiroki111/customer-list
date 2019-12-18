@@ -15,7 +15,7 @@ interface ICustomerListItem {
 const CustomerListItem = ({ id, name, groupName }: ICustomerListItem) => {
   return (
     <li className="customerlistitem">
-      <Link to={`/customers/${id}`}>
+      <Link to={{ pathname: `/customers/${id}`, state: { goBack: true } }}>
         <div className="customerlistitem-names">
           <div className="customer-name">{name}</div>
           <div className="group-name">
