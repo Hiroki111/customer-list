@@ -1,0 +1,13 @@
+.action-bar {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+
+  .actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 95%;
+    max-width: 1140px;
+  }
+}
