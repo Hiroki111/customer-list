@@ -22,3 +22,23 @@ export const fetchCustomers = (page: number = 1) => {
     }
   };
 };
+
+export const fetchCustomersWithKeyword = (keyword: string) => {
+  return async (dispatch: Dispatch<AnyAction>) => {
+    dispatch(actions.fetchCustomers());
+    try {
+      const result = await axios({
+        method: 'get',
+        url: `${apiBaseUrl}/customers?pageSize=${customerListPageSize}&keyword=${keyword}`
+      });
+      const data = {
+        customers: result.data.data,
+        totalCustomers: result.data.total,
+        currentPage: result.data.current_page
+      };
+      dispatch(actions.fetchCustomersFulfilled(data));
+    } catch (error) {
+      dispatch(actions.fetchCustomersRejected(error));
+    }
+  };
+};

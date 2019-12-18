@@ -36,7 +36,7 @@ class CustomerListContainer extends React.Component<IHocProps, ICustomerListStat
     }));
   }
 
-  render() {
+  displayCustomerList() {
     const { isLoadingCustomers, failedToLoadCustomers } = this.props;
     const { customers } = this.state;
     if (isLoadingCustomers) {
@@ -48,12 +48,18 @@ class CustomerListContainer extends React.Component<IHocProps, ICustomerListStat
     }
 
     return (
+      <CustomerList
+        customers={customers}
+        onSortEnd={({ oldIndex, newIndex }) => this.onSortEnd({ oldIndex, newIndex })}
+        distance={1}
+      />
+    );
+  }
+
+  render() {
+    return (
       <div className="customerlistcontainer">
-        <CustomerList
-          customers={customers}
-          onSortEnd={({ oldIndex, newIndex }) => this.onSortEnd({ oldIndex, newIndex })}
-          distance={1}
-        />
+        {this.displayCustomerList()}
         <Pagination />
       </div>
     );

@@ -4,6 +4,7 @@ import * as _ from 'lodash';
 
 import { CustomerListContainer } from 'components/Customers/CustomerListContainer';
 import { CustomerDetail } from 'components/Customers/CustomerDetail';
+import { SearchBox } from 'components/Customers/SearchBox';
 
 export const Customers = () => {
   let history = useHistory();
@@ -20,6 +21,9 @@ export const Customers = () => {
   return (
     <>
       <Route exact path="/customers/:id" render={props => <CustomerDetail {...props} handleClose={handleClose} />} />
+      <div>
+        <SearchBox />
+      </div>
       <CustomerListContainer />
     </>
   );
