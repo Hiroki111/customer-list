@@ -26,7 +26,7 @@ const CustomerModal = ({ match, handleClose }: ICustomerModal) => {
           <span>x</span>
         </button>
       </div>
-      <div className="body">{displayBody()}</div>
+      {displayBody()}
     </Modal>
   );
 };
