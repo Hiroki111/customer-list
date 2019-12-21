@@ -15,7 +15,7 @@ const CustomerModal = ({ match, handleClose }: ICustomerModal) => {
   const id = Number(match.params.id);
   const title = id < 1 ? 'Create Customer' : 'Customer Information';
   const displayBody = () => {
-    return id < 1 ? <CustomerEditor /> : <CustomerDetail id={id} handleClose={handleClose} />;
+    return id < 1 ? <CustomerEditor handleClose={handleClose} /> : <CustomerDetail id={id} handleClose={handleClose} />;
   };
 
   return (
