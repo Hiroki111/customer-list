@@ -1,7 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Modal } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+
 import { WithRedux, IWithReduxProps } from 'components/Customers/CustomerDetail/withRedux';
 import { getInitials } from 'utils';
 import LoadingSpinner from 'utils/components/LoadingSpinner';
@@ -16,71 +15,57 @@ const CustomerDetail = ({
   isDeletingCustomer,
   reloadCustomersList
 }: IWithReduxProps) => {
-  let history = useHistory();
-  const displayBody = () => {
-    if (loadingCustomerFailed) {
-      return <div>Loading the person details failed.</div>;
+  const history = useHistory();
+  const onClickDelete = () => {
+    if (window.confirm('Do you really wish to delete this customer?')) {
+      handleDelete(customer.id, () => {
+        reloadCustomersList();
+        history.push('/customers');
+      });
     }
-
-    if (isLoadingCustomer || isDeletingCustomer) {
-      return <LoadingSpinner />;
-    }
-
-    return (
-      <>
-        <div className="icon" data-letters={getInitials(customer.name)}></div>
-        <p className="name">{customer.name}</p>
-        <p className="phone">{customer.phone}</p>
-        <hr />
-        <table className="customer-details-table">
-          <tbody>
-            <tr>
-              <td className="field-name">Email</td>
-              <td className="data">{customer.email}</td>
-            </tr>
-            <tr>
-              <td className="field-name">address</td>
-              <td className="data">{customer.address}</td>
-            </tr>
-            <tr>
-              <td className="field-name">Group</td>
-              <td className="data">{customer.group ? customer.group.name : 'N/A'}</td>
-            </tr>
-            <tr>
-              <td className="field-name">Note</td>
-              <td className="data">{customer.note}</td>
-            </tr>
-          </tbody>
-        </table>
-      </>
-    );
   };
+
+  if (loadingCustomerFailed) {
+    return <div>Loading the person details failed.</div>;
+  }
+
+  if (isLoadingCustomer || isDeletingCustomer) {
+    return <LoadingSpinner />;
+  }
+
   return (
-    <Modal show={true} animation={false} onHide={handleClose} dialogClassName="customer-detail-modal">
-      <div className="header">
-        <p className="title">Customer Information</p>
-        <button className="close" onClick={handleClose}>
-          <span>x</span>
-        </button>
-      </div>
-      <div className="body">{displayBody()}</div>
+    <>
+      <div className="icon" data-letters={getInitials(customer.name)}></div>
+      <p className="name">{customer.name}</p>
+      <p className="phone">{customer.phone}</p>
+      <hr />
+      <table className="customer-details-table">
+        <tbody>
+          <tr>
+            <td className="field-name">Email</td>
+            <td className="data">{customer.email}</td>
+          </tr>
+          <tr>
+            <td className="field-name">Address</td>
+            <td className="data">{customer.address}</td>
+          </tr>
+          <tr>
+            <td className="field-name">Group</td>
+            <td className="data">{customer.group ? customer.group.name : 'N/A'}</td>
+          </tr>
+          <tr>
+            <td className="field-name">Note</td>
+            <td className="data">{customer.note}</td>
+          </tr>
+        </tbody>
+      </table>
       <div className="footer">
-        <button
-          className="delete-button"
-          onClick={() => {
-            if (window.confirm('Do you really wish to delete this customer?')) {
-              handleDelete(customer.id, () => {
-                reloadCustomersList();
-                history.push('/customers');
-              });
-            }
-          }}
-        >
+        <button className="delete-button" onClick={onClickDelete}>
           Delete
         </button>
         <button onClick={handleClose}>Back</button>
       </div>
-    </Modal>
+    </>
   );
 };
 

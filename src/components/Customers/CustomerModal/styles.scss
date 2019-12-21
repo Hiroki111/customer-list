@@ -1,0 +1,96 @@
+.customer-modal {
+  .modal-content {
+    border-radius: 0;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f7f7f7;
+    padding: 1rem;
+    border-bottom: 1px solid #dee2e6;
+
+    .title {
+      margin: 0;
+      font-weight: 800;
+    }
+  }
+
+  .body {
+    padding: 32px 0 16px 0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    [data-letters]:before {
+      content: attr(data-letters);
+      display: inline-block;
+      font-size: 1em;
+      width: 4em;
+      height: 4em;
+      line-height: 4em;
+      text-align: center;
+      border-radius: 50%;
+      background: rgb(65, 222, 243);
+      vertical-align: middle;
+      color: white;
+    }
+
+    .icon {
+      margin-bottom: 1rem;
+    }
+
+    .name {
+      margin-bottom: 0.25rem;
+      font-weight: 800;
+    }
+
+    .phone {
+      color: #27e359;
+      font-weight: 700;
+    }
+
+    hr {
+      width: 95%;
+      margin-top: 0;
+      border: none;
+      height: 1px;
+      color: #dee2e6;
+      background-color: #dee2e6;
+    }
+
+    table {
+      width: 100%;
+
+      .field-name {
+        text-align: right;
+        font-weight: 700;
+        width: 35%;
+        padding: 0.5rem 1rem;
+      }
+
+      .data {
+        width: 65%;
+        padding: 0.5rem 1rem;
+      }
+    }
+  }
+
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: #f7f7f7;
+    border-top: 1px solid #dee2e6;
+
+    button {
+      font-weight: 700;
+      padding: 0.25rem 1.25rem;
+    }
+
+    .delete-button {
+      color: red;
+    }
+  }
+}
