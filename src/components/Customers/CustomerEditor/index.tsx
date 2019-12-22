@@ -41,75 +41,43 @@ const CustomerEditor = ({ handleClose, groups }: IWithReduxProps) => {
   return (
     <>
       <InitialIcon name={customer.name} />
-      <table className="customer-editor-table">
-        <tbody>
-          <tr>
-            <td className="field-name">
-              <label htmlFor="name">Name</label>
-            </td>
-            <td className="data">
-              <input type="text" name="name" id="name" value={customer.name} onChange={handleChange('name')} />
-            </td>
-          </tr>
-          <tr>
-            <td className="field-name">
-              <label htmlFor="phone">Phone</label>
-            </td>
-            <td className="data">
-              <input type="text" name="phone" id="phone" value={customer.phone} onChange={handleChange('phone')} />
-            </td>
-          </tr>
-          <tr>
-            <td className="field-name">
-              <label htmlFor="email">Email</label>
-            </td>
-            <td className="data">
-              <input type="text" name="email" id="email" value={customer.email} onChange={handleChange('email')} />
-            </td>
-          </tr>
-          <tr>
-            <td className="field-name">
-              <label htmlFor="address">Address</label>
-            </td>
-            <td className="data">
-              <input
-                type="text"
-                name="address"
-                id="address"
-                value={customer.address}
-                onChange={handleChange('address')}
-              />
-            </td>
-          </tr>
-          <tr>
-            <td className="field-name">
-              <label htmlFor="group_id">Group</label>
-            </td>
-            <td className="data">
-              <DropdownButton id="group_id" className="dropdown" variant="outline-secondary" title={groupLabel}>
-                {[defaultDropdownItem].concat(groups).map((item, i) => (
-                  <Dropdown.Item key={i} eventKey={i.toString()} onSelect={handleSelectDropDown}>
-                    {item.name}
-                  </Dropdown.Item>
-                ))}
-              </DropdownButton>
-            </td>
-          </tr>
-          <tr>
-            <td className="field-name">
-              <label htmlFor="note">Note</label>
-            </td>
-            <td className="data">
-              <textarea name="note" id="note" value={customer.note} onChange={handleChange('note')} />
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div className="customer-editor-row">
+        <label htmlFor="name">
+          <span className="mandatory-field">*</span>Name
+        </label>
+        <input type="text" name="name" id="name" value={customer.name} onChange={handleChange('name')} />
+      </div>
+      <div className="customer-editor-row">
+        <label htmlFor="phone">Phone</label>
+        <input type="text" name="phone" id="phone" value={customer.phone} onChange={handleChange('phone')} />
+      </div>
+      <div className="customer-editor-row">
+        <label htmlFor="email">Email</label>
+        <input type="text" name="email" id="email" value={customer.email} onChange={handleChange('email')} />
+      </div>
+      <div className="customer-editor-row">
+        <label htmlFor="address">Address</label>
+        <input type="text" name="address" id="address" value={customer.address} onChange={handleChange('address')} />
+      </div>
+      <div className="customer-editor-row">
+        <label htmlFor="group_id">Group</label>
+        <DropdownButton id="group_id" className="dropdown" variant="outline-secondary" title={groupLabel}>
+          {[defaultDropdownItem].concat(groups).map((item, i) => (
+            <Dropdown.Item key={i} eventKey={i.toString()} onSelect={handleSelectDropDown}>
+              {item.name}
+            </Dropdown.Item>
+          ))}
+        </DropdownButton>
+      </div>
+      <div className="customer-editor-row">
+        <label htmlFor="note">Note</label>
+        <textarea name="note" id="note" value={customer.note} onChange={handleChange('note')} />
+      </div>
       <div className="footer">
+        <button onClick={handleClose}>Cancel</button>
         <button className="submit-button" onClick={() => {}}>
           Submit
         </button>
-        <button onClick={handleClose}>Back</button>
       </div>
     </>
   );

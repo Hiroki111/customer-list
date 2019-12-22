@@ -1,21 +1,30 @@
-.customer-editor {
-  input {
-    width: 70%;
+.customer-editor-row {
+  width: 90%;
+  margin-bottom: 0.5rem;
+  display: flex;
+
+  label {
+    width: 25%;
+    padding-right: 0.5rem;
+    text-align: right;
+    margin: 0;
+
+    .mandatory-field {
+      color: red;
+      font-weight: 700;
+    }
+  }
+
+  input,
+  textarea {
+    width: 75%;
     padding-right: 0.25rem;
     padding-left: 0.25rem;
   }
 
-  label {
-    margin: 0;
-    display: block;
-  }
-
-  .mandatory-field {
-    color: red;
-    font-weight: 700;
-  }
-
   .dropdown {
+    width: 75%;
+    display: inline-block;
     .btn-outline-secondary:hover {
       color: black;
       background-color: white;
@@ -33,7 +42,7 @@
     }
 
     button {
-      width: 70%;
+      width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -42,7 +51,6 @@
     }
   }
 
-  // Disable Bootstrap's default behaviour on hovering dropdown items
   .btn-outline-secondary:not(:disabled):not(.disabled).active,
   .btn-outline-secondary:not(:disabled):not(.disabled):active,
   .show > .btn-outline-secondary.dropdown-toggle {
