@@ -3,7 +3,7 @@ import { DropdownButton, Dropdown } from 'react-bootstrap';
 
 import { WithRedux, IWithReduxProps } from 'components/Customers/CustomerEditor/withRedux';
 import { ICustomer } from 'interfaces/models';
-import { getInitials } from 'utils';
+import InitialIcon from 'utils/components/InitialIcon';
 import './styles.scss';
 
 type InputField = 'name' | 'phone' | 'email' | 'address' | 'group_id' | 'note';
@@ -40,7 +40,7 @@ const CustomerEditor = ({ handleClose, groups }: IWithReduxProps) => {
 
   return (
     <>
-      <div className="icon" data-letters={getInitials(customer.name)}></div>
+      <InitialIcon name={customer.name} />
       <table className="customer-editor-table">
         <tbody>
           <tr>

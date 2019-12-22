@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBuilding } from '@fortawesome/free-solid-svg-icons';
 import { SortableElement } from 'react-sortable-hoc';
-import { getInitials } from 'utils';
+import InitialIcon from 'utils/components/InitialIcon';
 import './styles.scss';
 
 interface ICustomerListItem {
@@ -23,7 +23,7 @@ const CustomerListItem = ({ id, name, groupName }: ICustomerListItem) => {
             <span>{groupName}</span>
           </div>
         </div>
-        <div className="customerlistitem-icon" data-letters={getInitials(name)}></div>
+        <InitialIcon name={name} />
       </Link>
     </li>
   );

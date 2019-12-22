@@ -2,8 +2,8 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { WithRedux, IWithReduxProps } from 'components/Customers/CustomerDetail/withRedux';
-import { getInitials } from 'utils';
 import LoadingSpinner from 'utils/components/LoadingSpinner';
+import InitialIcon from 'utils/components/InitialIcon';
 import './styles.scss';
 
 const CustomerDetail = ({
@@ -37,7 +37,7 @@ const CustomerDetail = ({
 
   return (
     <>
-      <div className="icon" data-letters={getInitials(customer.name)}></div>
+      <InitialIcon name={customer.name} />
       <p className="name">{customer.name}</p>
       <p className="phone">{customer.phone}</p>
       <hr />
