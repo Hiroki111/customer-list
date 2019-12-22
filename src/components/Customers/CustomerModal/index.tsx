@@ -14,6 +14,7 @@ interface ICustomerModal extends RouteComponentProps<{ id: string }> {
 const CustomerModal = ({ match, handleClose }: ICustomerModal) => {
   const id = Number(match.params.id);
   const title = id < 1 ? 'Create Customer' : 'Customer Information';
+
   const displayBody = () => {
     return id < 1 ? <CustomerEditor handleClose={handleClose} /> : <CustomerDetail id={id} handleClose={handleClose} />;
   };
@@ -26,7 +27,7 @@ const CustomerModal = ({ match, handleClose }: ICustomerModal) => {
           <span>x</span>
         </button>
       </div>
-      {displayBody()}
+      <div className="body">{displayBody()}</div>
     </Modal>
   );
 };

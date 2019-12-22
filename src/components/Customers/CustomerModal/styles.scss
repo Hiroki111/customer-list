@@ -18,7 +18,7 @@
   }
 
   .body {
-    padding: 32px 0 16px 0;
+    padding-top: 32px;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -75,22 +75,23 @@
         padding: 0.5rem 1rem;
       }
     }
-  }
 
-  .footer {
-    display: flex;
-    justify-content: space-between;
-    padding: 1rem;
-    background-color: #f7f7f7;
-    border-top: 1px solid #dee2e6;
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      padding: 1rem;
+      background-color: #f7f7f7;
+      border-top: 1px solid #dee2e6;
 
-    button {
-      font-weight: 700;
-      padding: 0.25rem 1.25rem;
-    }
+      button {
+        font-weight: 700;
+        padding: 0.25rem 1.25rem;
+      }
 
-    .delete-button {
-      color: red;
+      .delete-button {
+        color: red;
+      }
     }
   }
 }

@@ -37,32 +37,30 @@ const CustomerDetail = ({
 
   return (
     <>
-      <div className="body">
-        <div className="icon" data-letters={getInitials(customer.name)}></div>
-        <p className="name">{customer.name}</p>
-        <p className="phone">{customer.phone}</p>
-        <hr />
-        <table className="customer-details-table">
-          <tbody>
-            <tr>
-              <td className="field-name">Email</td>
-              <td className="data">{customer.email}</td>
-            </tr>
-            <tr>
-              <td className="field-name">Address</td>
-              <td className="data">{customer.address}</td>
-            </tr>
-            <tr>
-              <td className="field-name">Group</td>
-              <td className="data">{customer.group ? customer.group.name : 'N/A'}</td>
-            </tr>
-            <tr>
-              <td className="field-name">Note</td>
-              <td className="data">{customer.note}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <div className="icon" data-letters={getInitials(customer.name)}></div>
+      <p className="name">{customer.name}</p>
+      <p className="phone">{customer.phone}</p>
+      <hr />
+      <table className="customer-details-table">
+        <tbody>
+          <tr>
+            <td className="field-name">Email</td>
+            <td className="data">{customer.email}</td>
+          </tr>
+          <tr>
+            <td className="field-name">Address</td>
+            <td className="data">{customer.address}</td>
+          </tr>
+          <tr>
+            <td className="field-name">Group</td>
+            <td className="data">{customer.group ? customer.group.name : 'N/A'}</td>
+          </tr>
+          <tr>
+            <td className="field-name">Note</td>
+            <td className="data">{customer.note}</td>
+          </tr>
+        </tbody>
+      </table>
       <div className="footer">
         <button className="delete-button" onClick={onClickDelete}>
           Delete

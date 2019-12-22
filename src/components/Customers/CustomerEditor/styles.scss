@@ -1,0 +1,52 @@
+.customer-editor {
+  input {
+    width: 70%;
+    padding-right: 0.25rem;
+    padding-left: 0.25rem;
+  }
+
+  label {
+    margin: 0;
+    display: block;
+  }
+
+  .mandatory-field {
+    color: red;
+    font-weight: 700;
+  }
+
+  .dropdown {
+    .btn-outline-secondary:hover {
+      color: black;
+      background-color: white;
+    }
+
+    .btn-outline-secondary:focus {
+      box-shadow: 0 0 0 0 white;
+    }
+
+    .dropdown-menu {
+      height: auto;
+      max-height: 200px;
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    button {
+      width: 70%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 0;
+      color: black;
+    }
+  }
+
+  // Disable Bootstrap's default behaviour on hovering dropdown items
+  .btn-outline-secondary:not(:disabled):not(.disabled).active,
+  .btn-outline-secondary:not(:disabled):not(.disabled):active,
+  .show > .btn-outline-secondary.dropdown-toggle {
+    color: black;
+    background-color: white;
+  }
+}
