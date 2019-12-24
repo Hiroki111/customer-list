@@ -18,9 +18,26 @@ export const fetchGroupsFulfilled = (payload: IFetchGroupsResult) => {
   };
 };
 
-export const fetchGroupsRejected = (error: boolean) => {
+export const fetchGroupsRejected = () => {
   return {
-    type: types.FETCH_GROUPS_REJECTED,
-    payload: error
+    type: types.FETCH_GROUPS_REJECTED
+  };
+};
+
+export const createCustomer = () => {
+  return {
+    type: types.CREATE_CUSTOMER
+  };
+};
+
+export const createCustomerFulfilled = () => {
+  return {
+    type: types.CREATE_CUSTOMER_FULFILLED
+  };
+};
+
+export const createCustomerRejected = () => {
+  return {
+    type: types.CREATE_CUSTOMER_REJECTED
   };
 };

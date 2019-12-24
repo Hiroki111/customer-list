@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { fetchGroups } from 'redux/customerEditor/operations';
+import { fetchGroups, createCustomer } from 'redux/customerEditor/operations';
 import { getGroups } from 'redux/customerEditor/selectors';
-import { IGroup } from 'interfaces/models';
+import { ICreateCustomer, IGroup } from 'interfaces/models';
 import { IState } from 'redux/root';
 
 interface IReduxProps {
@@ -11,6 +11,7 @@ interface IReduxProps {
 
 interface IDispatch {
   fetchGroups: () => void;
+  handleSubmit: (customer: ICreateCustomer) => void;
 }
 
 interface IOwnProps {
@@ -31,7 +32,8 @@ const WithRedux = (Component: React.ComponentType<IWithReduxProps>) => {
   }
 
   const mapDispatchToProps = (dispatch: (action: any) => void): IDispatch => ({
-    fetchGroups: () => dispatch(fetchGroups())
+    fetchGroups: () => dispatch(fetchGroups()),
+    handleSubmit: (customer: ICreateCustomer) => dispatch(createCustomer(customer))
   });
 
   const mapStateToProps = (state: IState) => ({

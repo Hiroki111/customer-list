@@ -2,29 +2,19 @@ import React, { useState } from 'react';
 import { DropdownButton, Dropdown } from 'react-bootstrap';
 
 import { WithRedux, IWithReduxProps } from 'components/Customers/CustomerEditor/withRedux';
-import { ICustomer } from 'interfaces/models';
+import { ICreateCustomer } from 'interfaces/models';
 import InitialIcon from 'utils/components/InitialIcon';
 import './styles.scss';
 
 type InputField = 'name' | 'phone' | 'email' | 'address' | 'group_id' | 'note';
 
-const CustomerEditor = ({ handleClose, groups }: IWithReduxProps) => {
-  const [customer, setCustomer] = useState<ICustomer>({
-    id: -1,
-    name: '',
-    phone: '',
-    email: '',
-    address: '',
-    group_id: 0,
-    note: ''
+const CustomerEditor = ({ handleSubmit, handleClose, groups }: IWithReduxProps) => {
+  const [customer, setCustomer] = useState<ICreateCustomer>({
+    name: ''
   });
-
-  const defaultDropdownItem = {
-    id: -1,
-    name: 'N/A'
-  };
-
   const [groupLabel, setGroupLabel] = useState('Select...');
+  const defaultDropdownItem = { id: 0, name: 'N/A' };
+  const dropdownItems = [defaultDropdownItem].concat(groups);
 
   const handleChange = (field: InputField) => (
     e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>
@@ -33,10 +23,12 @@ const CustomerEditor = ({ handleClose, groups }: IWithReduxProps) => {
   };
 
   const handleSelectDropDown = (eventKey: string) => {
-    const group = groups[Number(eventKey)] || defaultDropdownItem;
+    const group = dropdownItems[Number(eventKey)] || defaultDropdownItem;
     setGroupLabel(group.name);
     setCustomer({ ...customer, group_id: group.id });
   };
+
+  const handleClickSubmit = () => handleSubmit(customer);
 
   return (
     <>
@@ -62,7 +54,7 @@ const CustomerEditor = ({ handleClose, groups }: IWithReduxProps) => {
       <div className="customer-editor-row">
         <label htmlFor="group_id">Group</label>
         <DropdownButton id="group_id" className="dropdown" variant="outline-secondary" title={groupLabel}>
-          {[defaultDropdownItem].concat(groups).map((item, i) => (
+          {dropdownItems.map((item, i) => (
             <Dropdown.Item key={i} eventKey={i.toString()} onSelect={handleSelectDropDown}>
               {item.name}
             </Dropdown.Item>
@@ -75,7 +67,7 @@ const CustomerEditor = ({ handleClose, groups }: IWithReduxProps) => {
       </div>
       <div className="footer">
         <button onClick={handleClose}>Cancel</button>
-        <button className="submit-button" onClick={() => {}}>
+        <button className="submit-button" onClick={handleClickSubmit}>
           Submit
         </button>
       </div>
