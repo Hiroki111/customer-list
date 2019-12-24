@@ -2,15 +2,29 @@ import React, { useState } from 'react';
 import { DropdownButton, Dropdown } from 'react-bootstrap';
 
 import { WithRedux, IWithReduxProps } from 'components/Customers/CustomerEditor/withRedux';
-import { ICreateCustomer } from 'interfaces/models';
 import InitialIcon from 'utils/components/InitialIcon';
+import LoadingSpinner from 'utils/components/LoadingSpinner';
 import './styles.scss';
+
+interface ICustomerEditorState {
+  name: string;
+  phone: string;
+  email: string;
+  address: string;
+  note: string;
+  group_id: number;
+}
 
 type InputField = 'name' | 'phone' | 'email' | 'address' | 'group_id' | 'note';
 
-const CustomerEditor = ({ handleSubmit, handleClose, groups }: IWithReduxProps) => {
-  const [customer, setCustomer] = useState<ICreateCustomer>({
-    name: ''
+const CustomerEditor = ({ isCreatingCustomer, handleSubmit, handleClose, groups }: IWithReduxProps) => {
+  const [customer, setCustomer] = useState<ICustomerEditorState>({
+    name: '',
+    phone: '',
+    email: '',
+    address: '',
+    note: '',
+    group_id: 0
   });
   const [groupLabel, setGroupLabel] = useState('Select...');
   const defaultDropdownItem = { id: 0, name: 'N/A' };
@@ -28,7 +42,20 @@ const CustomerEditor = ({ handleSubmit, handleClose, groups }: IWithReduxProps) 
     setCustomer({ ...customer, group_id: group.id });
   };
 
-  const handleClickSubmit = () => handleSubmit(customer);
+  const handleClickSubmit = () => {
+    handleSubmit({
+      name: customer.name.trim(),
+      phone: customer.phone.trim() || undefined,
+      email: customer.email.trim() || undefined,
+      address: customer.address.trim() || undefined,
+      note: customer.note.trim() || undefined,
+      group_id: customer.group_id > 0 ? customer.group_id : undefined
+    });
+  };
+
+  if (isCreatingCustomer) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <>

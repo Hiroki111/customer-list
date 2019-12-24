@@ -8,13 +8,15 @@ export interface ICustomerEditorState {
   groups: IGroup[];
   status: {
     fetchingGroups: status;
+    creatingCustomer: status;
   };
 }
 
 export const defaults = {
   groups: [] as IGroup[],
   status: {
-    fetchingGroups: '' as status
+    fetchingGroups: '' as status,
+    creatingCustomer: '' as status
   }
 };
 
@@ -39,6 +41,27 @@ export const customerEditorReducer = (state: ICustomerEditorState = defaults, ac
       return {
         ...state,
         status: { ...state.status, fetchingGroups: 'FAILED' as status }
+      };
+    }
+
+    case types.CREATE_CUSTOMER: {
+      return {
+        ...state,
+        status: { ...state.status, creatingCustomer: 'PENDING' as status }
+      };
+    }
+
+    case types.CREATE_CUSTOMER_FULFILLED: {
+      return {
+        ...state,
+        status: { ...state.status, creatingCustomer: 'OK' as status }
+      };
+    }
+
+    case types.CREATE_CUSTOMER_REJECTED: {
+      return {
+        ...state,
+        status: { ...state.status, creatingCustomer: 'FAILED' as status }
       };
     }
   }

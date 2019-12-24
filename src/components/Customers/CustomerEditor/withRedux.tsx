@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { fetchGroups, createCustomer } from 'redux/customerEditor/operations';
-import { getGroups } from 'redux/customerEditor/selectors';
+import { getGroups, getIsCreatingCustomer } from 'redux/customerEditor/selectors';
 import { ICreateCustomer, IGroup } from 'interfaces/models';
 import { IState } from 'redux/root';
 
 interface IReduxProps {
   groups: IGroup[];
+  isCreatingCustomer: boolean;
 }
 
 interface IDispatch {
@@ -37,7 +38,8 @@ const WithRedux = (Component: React.ComponentType<IWithReduxProps>) => {
   });
 
   const mapStateToProps = (state: IState) => ({
-    groups: getGroups(state)
+    groups: getGroups(state),
+    isCreatingCustomer: getIsCreatingCustomer(state)
   });
 
   return connect(mapStateToProps, mapDispatchToProps)(CustomerEditor);

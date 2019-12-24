@@ -6,3 +6,8 @@ const customerEditorSelector = (state: IState) => state.customerEditor;
 export const getGroups = createSelector(customerEditorSelector, state =>
   state.groups.sort((a, b) => a.name.localeCompare(b.name))
 );
+
+export const getIsCreatingCustomer = createSelector(
+  customerEditorSelector,
+  state => state.status.creatingCustomer === 'PENDING'
+);
