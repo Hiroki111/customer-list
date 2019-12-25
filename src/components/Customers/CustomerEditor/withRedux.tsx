@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { fetchGroups, createCustomer } from 'redux/customerEditor/operations';
+import { resetCreatingCustomerStatus } from 'redux/customerEditor/actions';
 import {
   getGroups,
   getIsCreatingCustomer,
+  getCustomerCreated,
   getCreateCustomerFailed,
   getCreateCustomerErrorMessages
 } from 'redux/customerEditor/selectors';
@@ -13,12 +15,14 @@ import { IState } from 'redux/root';
 interface IReduxProps {
   groups: IGroup[];
   isCreatingCustomer: boolean;
+  customerCreated: boolean;
   createCustomerFailed: boolean;
   createCustomerErrorMessages: string[];
 }
 
 interface IDispatch {
   fetchGroups: () => void;
+  resetCreatingCustomerStatus: () => void;
   handleSubmit: (customer: ICreateCustomer, callback: () => void) => void;
 }
 
@@ -36,17 +40,20 @@ const WithRedux = (Component: React.ComponentType<IWithReduxProps>) => {
 
     componentDidMount() {
       this.props.fetchGroups();
+      this.props.resetCreatingCustomerStatus();
     }
   }
 
   const mapDispatchToProps = (dispatch: (action: any) => void): IDispatch => ({
     fetchGroups: () => dispatch(fetchGroups()),
+    resetCreatingCustomerStatus: () => dispatch(resetCreatingCustomerStatus()),
     handleSubmit: (customer: ICreateCustomer, callback: () => void) => dispatch(createCustomer(customer, callback))
   });
 
   const mapStateToProps = (state: IState) => ({
     groups: getGroups(state),
     isCreatingCustomer: getIsCreatingCustomer(state),
+    customerCreated: getCustomerCreated(state),
     createCustomerFailed: getCreateCustomerFailed(state),
     createCustomerErrorMessages: getCreateCustomerErrorMessages(state)
   });

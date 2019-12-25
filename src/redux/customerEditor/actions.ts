@@ -42,3 +42,9 @@ export const createCustomerRejected = (errorMessages: string[]) => {
     payload: errorMessages
   };
 };
+
+export const resetCreatingCustomerStatus = () => {
+  return {
+    type: types.RESET_CREATE_CUSTOMER_STATUS
+  };
+};

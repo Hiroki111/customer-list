@@ -54,7 +54,7 @@ export const customerEditorReducer = (state: ICustomerEditorState = defaults, ac
       return {
         ...state,
         status: { ...state.status, creatingCustomer: 'PENDING' as status },
-        errorMessages: { ...state.status, creatingCustomer: [] }
+        errorMessages: { ...state.errorMessages, creatingCustomer: [] }
       };
     }
 
@@ -69,7 +69,15 @@ export const customerEditorReducer = (state: ICustomerEditorState = defaults, ac
       return {
         ...state,
         status: { ...state.status, creatingCustomer: 'FAILED' as status },
-        errorMessages: { ...state.status, creatingCustomer: action.payload }
+        errorMessages: { ...state.errorMessages, creatingCustomer: action.payload }
+      };
+    }
+
+    case types.RESET_CREATE_CUSTOMER_STATUS: {
+      return {
+        ...state,
+        status: { ...state.status, creatingCustomer: '' as status },
+        errorMessages: { ...state.errorMessages, creatingCustomer: [] }
       };
     }
   }

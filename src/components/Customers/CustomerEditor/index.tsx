@@ -20,6 +20,7 @@ type InputField = 'name' | 'phone' | 'email' | 'address' | 'group_id' | 'note';
 
 const CustomerEditor = ({
   isCreatingCustomer,
+  customerCreated,
   createCustomerFailed,
   createCustomerErrorMessages,
   handleSubmit,
@@ -61,7 +62,10 @@ const CustomerEditor = ({
         note: customer.note.trim() || undefined,
         group_id: customer.group_id > 0 ? customer.group_id : undefined
       },
-      () => setCustomer(defaultCustomerData)
+      () => {
+        setCustomer(defaultCustomerData);
+        setGroupLabel('N/A');
+      }
     );
   };
 
@@ -82,6 +86,12 @@ const CustomerEditor = ({
             }
             variant={'danger'}
           />
+        </div>
+      );
+    } else if (customerCreated) {
+      return (
+        <div className="customer-editor-row">
+          <MessageBox message={<p>New customer created.</p>} variant={'success'} />
         </div>
       );
     }

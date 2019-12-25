@@ -12,6 +12,11 @@ export const getIsCreatingCustomer = createSelector(
   state => state.status.creatingCustomer === 'PENDING'
 );
 
+export const getCustomerCreated = createSelector(
+  customerEditorSelector,
+  state => state.status.creatingCustomer === 'OK'
+);
+
 export const getCreateCustomerFailed = createSelector(
   customerEditorSelector,
   state => state.status.creatingCustomer === 'FAILED'
