@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { withRouter, RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
 import { fetchCustomers } from 'redux/customerList/operations';
 import { deleteCustomer, fetchCustomer } from 'redux/customerDetail/operations';
@@ -11,8 +12,7 @@ import {
 } from 'redux/customerDetail/selectors';
 import { IState } from 'redux/root';
 
-interface IOwnProps {
-  id: number;
+interface IOwnProps extends RouteComponentProps<{ id: string }> {
   handleClose: () => void;
 }
 
@@ -38,8 +38,9 @@ const WithRedux = (Component: React.ComponentType<IWithReduxProps>) => {
     }
 
     componentDidMount() {
-      if (this.props.id > 0) {
-        this.props.fetchCustomer(this.props.id);
+      const id = Number(this.props.match.params.id);
+      if (id > 0) {
+        this.props.fetchCustomer(id);
       }
     }
   }
@@ -57,7 +58,9 @@ const WithRedux = (Component: React.ComponentType<IWithReduxProps>) => {
     isDeletingCustomer: getIsDeletingCustomer(state)
   });
 
-  return connect(mapStateToProps, mapDispatchToProps)(CustomerDetail);
+  const CustomerDetailWithRedux = connect(mapStateToProps, mapDispatchToProps)(CustomerDetail);
+
+  return withRouter(CustomerDetailWithRedux);
 };
 
 export { WithRedux };

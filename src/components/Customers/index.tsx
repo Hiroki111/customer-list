@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import * as _ from 'lodash';
 
 import { CustomerListContainer } from 'components/Customers/CustomerListContainer';
-import { CustomerModal } from 'components/Customers/CustomerModal';
+import { CustomerDetail } from 'components/Customers/CustomerDetail';
+import { CustomerEditor } from 'components/Customers/CustomerEditor';
 import { SearchBox } from 'components/Customers/SearchBox';
 import './styles.scss';
 
@@ -22,10 +23,15 @@ export const Customers = () => {
 
   return (
     <>
-      <Route exact path="/customers/:id" render={props => <CustomerModal {...props} handleClose={handleClose} />} />
+      <Route exact path="/customers/:id" render={props => <CustomerDetail {...props} handleClose={handleClose} />} />
+      <Route
+        exact
+        path="/customers/edit/:id"
+        render={props => <CustomerEditor {...props} handleClose={handleClose} />}
+      />
       <div className="action-bar">
         <div className="actions">
-          <Link to="/customers/-1">Create New Customer</Link>
+          <Link to="/customers/edit/-1">Create New Customer</Link>
           <SearchBox />
         </div>
       </div>

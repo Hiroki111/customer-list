@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { WithRedux, IWithReduxProps } from 'components/Customers/CustomerDetail/withRedux';
-import LoadingSpinner from 'utils/components/LoadingSpinner';
+import { CustomerModal } from 'components/Customers/CustomerModal';
 import InitialIcon from 'utils/components/InitialIcon';
 import './styles.scss';
 
@@ -31,12 +31,12 @@ const CustomerDetail = ({
     return <div>Loading the person details failed.</div>;
   }
 
-  if (isLoadingCustomer || isDeletingCustomer) {
-    return <LoadingSpinner />;
-  }
-
   return (
-    <>
+    <CustomerModal
+      handleClose={handleClose}
+      title={'Customer Detail'}
+      showLoadingSpinner={isLoadingCustomer || isDeletingCustomer}
+    >
       <InitialIcon name={customer.name} />
       <p className="name">{customer.name}</p>
       <p className="phone">{customer.phone}</p>
@@ -67,7 +67,7 @@ const CustomerDetail = ({
         </button>
         <button onClick={handleClose}>Back</button>
       </div>
-    </>
+    </CustomerModal>
   );
 };
 

@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { DropdownButton, Dropdown } from 'react-bootstrap';
 
 import { WithRedux, IWithReduxProps } from 'components/Customers/CustomerEditor/withRedux';
+import { CustomerModal } from 'components/Customers/CustomerModal';
 import InitialIcon from 'utils/components/InitialIcon';
-import LoadingSpinner from 'utils/components/LoadingSpinner';
 import MessageBox from 'utils/components/MessageBox';
 import './styles.scss';
 
@@ -95,14 +95,11 @@ const CustomerEditor = ({
         </div>
       );
     }
+    return <></>;
   };
 
-  if (isCreatingCustomer) {
-    return <LoadingSpinner />;
-  }
-
   return (
-    <>
+    <CustomerModal handleClose={handleClose} showLoadingSpinner={isCreatingCustomer} title={'Edit Customer'}>
       <InitialIcon name={customer.name} />
       {showMessage()}
       <div className="customer-editor-row">
@@ -143,7 +140,7 @@ const CustomerEditor = ({
           Submit
         </button>
       </div>
-    </>
+    </CustomerModal>
   );
 };
 

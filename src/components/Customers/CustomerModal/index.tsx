@@ -1,24 +1,18 @@
 import React from 'react';
-import { withRouter, RouteComponentProps } from 'react-router';
 import { Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { CustomerEditor } from 'components/Customers/CustomerEditor';
-import { CustomerDetail } from 'components/Customers/CustomerDetail';
+import LoadingSpinner from 'utils/components/LoadingSpinner';
 import './styles.scss';
 
-interface ICustomerModal extends RouteComponentProps<{ id: string }> {
+interface ICustomerModal {
   handleClose: () => void;
+  title: string;
+  showLoadingSpinner: boolean;
+  children: JSX.Element[] | JSX.Element;
 }
 
-const CustomerModal = ({ match, handleClose }: ICustomerModal) => {
-  const id = Number(match.params.id);
-  const title = id < 1 ? 'Create Customer' : 'Customer Information';
-
-  const displayBody = () => {
-    return id < 1 ? <CustomerEditor handleClose={handleClose} /> : <CustomerDetail id={id} handleClose={handleClose} />;
-  };
-
+const CustomerModal = ({ title, showLoadingSpinner, children, handleClose }: ICustomerModal) => {
   return (
     <Modal show animation={false} onHide={handleClose} dialogClassName="customer-modal">
       <div className="header">
@@ -27,11 +21,9 @@ const CustomerModal = ({ match, handleClose }: ICustomerModal) => {
           <span>x</span>
         </button>
       </div>
-      <div className="body">{displayBody()}</div>
+      <div className="body">{showLoadingSpinner ? <LoadingSpinner /> : children}</div>
     </Modal>
   );
 };
 
-const CustomerModalWithRouter = withRouter(CustomerModal);
-
-export { CustomerModalWithRouter as CustomerModal };
+export { CustomerModal };
