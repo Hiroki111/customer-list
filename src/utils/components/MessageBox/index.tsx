@@ -2,19 +2,19 @@ import React from 'react';
 import Alert from 'react-bootstrap/Alert';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import './styles.scss';
+
 interface MessageBoxI {
-  message: string;
+  message: JSX.Element;
+  variant: 'success' | 'danger';
   heading?: string;
 }
 
-const MessageBox = ({ message, heading }: MessageBoxI) => {
-  if (!heading) {
-    heading = 'ERROR';
-  }
+const MessageBox = ({ message, variant, heading }: MessageBoxI) => {
   return (
-    <Alert variant="danger">
-      <Alert.Heading>{heading}</Alert.Heading>
-      <p>{message}</p>
+    <Alert variant={variant}>
+      {heading && <Alert.Heading>{heading}</Alert.Heading>}
+      {message}
     </Alert>
   );
 };

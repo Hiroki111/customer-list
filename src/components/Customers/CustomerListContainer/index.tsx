@@ -44,7 +44,15 @@ class CustomerListContainer extends React.Component<IHocProps, ICustomerListStat
     }
 
     if (failedToLoadCustomers) {
-      return <MessageBox message={'Due to an internal error, customers were not loaded. Please try again later.'} />;
+      return (
+        <div className="customerlistcontainer-message-wrapper">
+          <MessageBox
+            message={<p>Due to an internal error, customers were not loaded. Please try again later.</p>}
+            variant={'danger'}
+            heading={'ERROR'}
+          />
+        </div>
+      );
     }
 
     return (

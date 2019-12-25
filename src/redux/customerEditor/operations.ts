@@ -12,17 +12,14 @@ export const fetchGroups = () => {
         method: 'get',
         url: `${apiBaseUrl}/groups`
       });
-      const data = {
-        groups: result.data.data
-      };
-      dispatch(actions.fetchGroupsFulfilled(data));
+      dispatch(actions.fetchGroupsFulfilled({ groups: result.data.data }));
     } catch (error) {
       dispatch(actions.fetchGroupsRejected());
     }
   };
 };
 
-export const createCustomer = (customer: ICreateCustomer) => {
+export const createCustomer = (customer: ICreateCustomer, callback: () => void) => {
   return async (dispatch: Dispatch<AnyAction>) => {
     dispatch(actions.createCustomer());
     try {
@@ -36,8 +33,18 @@ export const createCustomer = (customer: ICreateCustomer) => {
         }
       });
       dispatch(actions.createCustomerFulfilled());
+      callback();
     } catch (error) {
-      dispatch(actions.createCustomerRejected());
+      let messages;
+      if (error.response.data.messages) {
+        messages = Object.keys(error.response.data.messages).map(function(key) {
+          return error.response.data.messages[key].join(',  ');
+        });
+      } else {
+        messages = [error.message];
+      }
+
+      dispatch(actions.createCustomerRejected(messages));
     }
   };
 };

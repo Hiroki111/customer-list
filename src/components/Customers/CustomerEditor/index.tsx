@@ -4,6 +4,7 @@ import { DropdownButton, Dropdown } from 'react-bootstrap';
 import { WithRedux, IWithReduxProps } from 'components/Customers/CustomerEditor/withRedux';
 import InitialIcon from 'utils/components/InitialIcon';
 import LoadingSpinner from 'utils/components/LoadingSpinner';
+import MessageBox from 'utils/components/MessageBox';
 import './styles.scss';
 
 interface ICustomerEditorState {
@@ -17,15 +18,23 @@ interface ICustomerEditorState {
 
 type InputField = 'name' | 'phone' | 'email' | 'address' | 'group_id' | 'note';
 
-const CustomerEditor = ({ isCreatingCustomer, handleSubmit, handleClose, groups }: IWithReduxProps) => {
-  const [customer, setCustomer] = useState<ICustomerEditorState>({
+const CustomerEditor = ({
+  isCreatingCustomer,
+  createCustomerFailed,
+  createCustomerErrorMessages,
+  handleSubmit,
+  handleClose,
+  groups
+}: IWithReduxProps) => {
+  const defaultCustomerData = {
     name: '',
     phone: '',
     email: '',
     address: '',
     note: '',
     group_id: 0
-  });
+  };
+  const [customer, setCustomer] = useState<ICustomerEditorState>(defaultCustomerData);
   const [groupLabel, setGroupLabel] = useState('Select...');
   const defaultDropdownItem = { id: 0, name: 'N/A' };
   const dropdownItems = [defaultDropdownItem].concat(groups);
@@ -43,14 +52,39 @@ const CustomerEditor = ({ isCreatingCustomer, handleSubmit, handleClose, groups 
   };
 
   const handleClickSubmit = () => {
-    handleSubmit({
-      name: customer.name.trim(),
-      phone: customer.phone.trim() || undefined,
-      email: customer.email.trim() || undefined,
-      address: customer.address.trim() || undefined,
-      note: customer.note.trim() || undefined,
-      group_id: customer.group_id > 0 ? customer.group_id : undefined
-    });
+    handleSubmit(
+      {
+        name: customer.name.trim(),
+        phone: customer.phone.trim() || undefined,
+        email: customer.email.trim() || undefined,
+        address: customer.address.trim() || undefined,
+        note: customer.note.trim() || undefined,
+        group_id: customer.group_id > 0 ? customer.group_id : undefined
+      },
+      () => setCustomer(defaultCustomerData)
+    );
+  };
+
+  const showMessage = () => {
+    if (createCustomerFailed) {
+      return (
+        <div className="customer-editor-row">
+          <MessageBox
+            message={
+              <>
+                <p>It failed to create a customer :</p>
+                <ul>
+                  {createCustomerErrorMessages.map((message, i) => (
+                    <li key={i}>{message}</li>
+                  ))}
+                </ul>
+              </>
+            }
+            variant={'danger'}
+          />
+        </div>
+      );
+    }
   };
 
   if (isCreatingCustomer) {
@@ -60,6 +94,7 @@ const CustomerEditor = ({ isCreatingCustomer, handleSubmit, handleClose, groups 
   return (
     <>
       <InitialIcon name={customer.name} />
+      {showMessage()}
       <div className="customer-editor-row">
         <label htmlFor="name">
           <span className="mandatory-field">*</span>Name
@@ -72,7 +107,7 @@ const CustomerEditor = ({ isCreatingCustomer, handleSubmit, handleClose, groups 
       </div>
       <div className="customer-editor-row">
         <label htmlFor="email">Email</label>
-        <input type="text" name="email" id="email" value={customer.email} onChange={handleChange('email')} />
+        <input type="email" name="email" id="email" value={customer.email} onChange={handleChange('email')} />
       </div>
       <div className="customer-editor-row">
         <label htmlFor="address">Address</label>

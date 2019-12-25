@@ -36,8 +36,9 @@ export const createCustomerFulfilled = () => {
   };
 };
 
-export const createCustomerRejected = () => {
+export const createCustomerRejected = (errorMessages: string[]) => {
   return {
-    type: types.CREATE_CUSTOMER_REJECTED
+    type: types.CREATE_CUSTOMER_REJECTED,
+    payload: errorMessages
   };
 };

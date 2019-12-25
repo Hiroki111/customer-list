@@ -10,6 +10,9 @@ export interface ICustomerEditorState {
     fetchingGroups: status;
     creatingCustomer: status;
   };
+  errorMessages: {
+    creatingCustomer: string[];
+  };
 }
 
 export const defaults = {
@@ -17,6 +20,9 @@ export const defaults = {
   status: {
     fetchingGroups: '' as status,
     creatingCustomer: '' as status
+  },
+  errorMessages: {
+    creatingCustomer: []
   }
 };
 
@@ -47,7 +53,8 @@ export const customerEditorReducer = (state: ICustomerEditorState = defaults, ac
     case types.CREATE_CUSTOMER: {
       return {
         ...state,
-        status: { ...state.status, creatingCustomer: 'PENDING' as status }
+        status: { ...state.status, creatingCustomer: 'PENDING' as status },
+        errorMessages: { ...state.status, creatingCustomer: [] }
       };
     }
 
@@ -61,7 +68,8 @@ export const customerEditorReducer = (state: ICustomerEditorState = defaults, ac
     case types.CREATE_CUSTOMER_REJECTED: {
       return {
         ...state,
-        status: { ...state.status, creatingCustomer: 'FAILED' as status }
+        status: { ...state.status, creatingCustomer: 'FAILED' as status },
+        errorMessages: { ...state.status, creatingCustomer: action.payload }
       };
     }
   }

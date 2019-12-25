@@ -2,4 +2,9 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+
+  &-message-wrapper {
+    margin: 1rem 0;
+    width: 95%
+  }
 }
