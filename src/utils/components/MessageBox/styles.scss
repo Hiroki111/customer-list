@@ -1,3 +1,8 @@
 .alert {
   width: 100%;
+
+  p,
+  ul {
+    margin: 0;
+  }
 }
