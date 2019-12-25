@@ -4,7 +4,7 @@
   display: flex;
 
   label {
-    width: 25%;
+    width: 20%;
     padding-right: 0.5rem;
     text-align: right;
     margin: 0;
@@ -25,6 +25,7 @@
   .dropdown {
     width: 75%;
     display: inline-block;
+
     .btn-outline-secondary:hover {
       color: black;
       background-color: white;
@@ -53,7 +54,7 @@
 
   .btn-outline-secondary:not(:disabled):not(.disabled).active,
   .btn-outline-secondary:not(:disabled):not(.disabled):active,
-  .show > .btn-outline-secondary.dropdown-toggle {
+  .show>.btn-outline-secondary.dropdown-toggle {
     color: black;
     background-color: white;
   }

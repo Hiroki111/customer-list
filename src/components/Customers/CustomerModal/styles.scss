@@ -55,10 +55,14 @@
     table {
       width: 100%;
 
+      td {
+        vertical-align: top;
+      }
+
       .field-name {
         text-align: right;
         font-weight: 700;
-        width: 35%;
+        width: 25%;
         padding: 0.5rem 1rem;
       }
 
