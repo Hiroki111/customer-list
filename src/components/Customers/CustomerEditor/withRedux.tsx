@@ -57,7 +57,13 @@ const WithRedux = (Component: React.ComponentType<IWithReduxProps>) => {
     componentDidMount() {
       this.props.fetchGroups();
       this.props.resetCreatingCustomerStatus();
-      const id = Number(this.props.match.params.id);
+      let id;
+      const idString = this.props.match.params.id;
+      if (idString.includes('?')) {
+        id = Number(idString.substr(0, idString.indexOf('?')));
+      } else {
+        id = Number(idString);
+      }
       this.props.fetchCustomer(id);
     }
   }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import * as _ from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBuilding } from '@fortawesome/free-solid-svg-icons';
 import { SortableElement } from 'react-sortable-hoc';
@@ -10,6 +11,8 @@ import './styles.scss';
 
 const CustomerListItem = ({ id, name, groupName, handleDelete, reloadCustomersList }: IWithReduxProps) => {
   const history = useHistory();
+  const queryParameter = _.get(history, 'location.search', '');
+  const pathName = `/customers/edit/${id}${queryParameter}`;
   const onClickDelete = () => {
     if (!window.confirm('Do you really wish to delete this customer?')) {
       return;
@@ -23,7 +26,7 @@ const CustomerListItem = ({ id, name, groupName, handleDelete, reloadCustomersLi
 
   return (
     <li className="customerlistitem">
-      <Link to={{ pathname: `/customers/edit/${id}`, state: { goBack: true } }}>
+      <Link to={{ pathname: pathName, state: { goBack: true } }}>
         <InitialIcon name={name} />
         <div className="names">
           <div className="customer-name">{name}</div>
