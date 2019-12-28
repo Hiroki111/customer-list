@@ -26,3 +26,8 @@ export const getTotalPage = createSelector(customerListSelector, state => {
 });
 
 export const getCurrentPage = createSelector(customerListSelector, state => state.currentPage);
+
+export const getIsDeletingCustomer = createSelector(
+  customerListSelector,
+  state => state.status.deletingCustomer === 'PENDING'
+);

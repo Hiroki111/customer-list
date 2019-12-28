@@ -42,3 +42,23 @@ export const fetchCustomersWithKeyword = (keyword: string) => {
     }
   };
 };
+
+export const deleteCustomer = (id: number, callback: () => void) => {
+  return async (dispatch: Dispatch<AnyAction>) => {
+    dispatch(actions.deleteCustomer());
+    try {
+      await axios({
+        method: 'delete',
+        url: `${apiBaseUrl}/customers/${id}`,
+        headers: {
+          Accept: 'application/json'
+        }
+      });
+      dispatch(actions.deleteCustomerFulfilled());
+      callback();
+    } catch (error) {
+      alert('Internal error occurred. Please try again later.');
+      dispatch(actions.deleteCustomerRejected());
+    }
+  };
+};

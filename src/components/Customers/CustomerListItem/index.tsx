@@ -1,34 +1,46 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBuilding } from '@fortawesome/free-solid-svg-icons';
 import { SortableElement } from 'react-sortable-hoc';
+import { WithRedux, IWithReduxProps } from 'components/Customers/CustomerListItem/withRedux';
 import InitialIcon from 'utils/components/InitialIcon';
 import './styles.scss';
 
-interface ICustomerListItem {
-  id: number;
-  name: string;
-  groupName: string;
-}
+const CustomerListItem = ({ id, name, groupName, handleDelete, reloadCustomersList }: IWithReduxProps) => {
+  const history = useHistory();
+  const onClickDelete = () => {
+    if (!window.confirm('Do you really wish to delete this customer?')) {
+      return;
+    }
 
-const CustomerListItem = ({ id, name, groupName }: ICustomerListItem) => {
+    handleDelete(id, () => {
+      reloadCustomersList();
+      history.push('/customers');
+    });
+  };
+
   return (
     <li className="customerlistitem">
       <Link to={{ pathname: `/customers/edit/${id}`, state: { goBack: true } }}>
-        <div className="customerlistitem-names">
+        <InitialIcon name={name} />
+        <div className="names">
           <div className="customer-name">{name}</div>
           <div className="group-name">
             <FontAwesomeIcon icon={faBuilding} />
             <span>{groupName}</span>
           </div>
         </div>
-        <InitialIcon name={name} />
       </Link>
+      <div className="customerlistitem-icon">
+        <button onClick={onClickDelete}>DELETE</button>
+      </div>
     </li>
   );
 };
 
-const SortableCustomerListItem = SortableElement(CustomerListItem);
+const CustomerListItemWithRedux = WithRedux(CustomerListItem);
+const SortableCustomerListItemWithRedux = SortableElement(CustomerListItemWithRedux);
 
-export { SortableCustomerListItem as CustomerListItem };
+export { SortableCustomerListItemWithRedux as CustomerListItem };

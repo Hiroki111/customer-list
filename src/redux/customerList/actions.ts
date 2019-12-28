@@ -26,3 +26,21 @@ export const fetchCustomersRejected = (error: boolean) => {
     payload: error
   };
 };
+
+export const deleteCustomer = () => {
+  return {
+    type: types.DELETE_CUSTOMER
+  };
+};
+
+export const deleteCustomerFulfilled = () => {
+  return {
+    type: types.DELETE_CUSTOMER_FULFILLED
+  };
+};
+
+export const deleteCustomerRejected = () => {
+  return {
+    type: types.DELETE_CUSTOMER_REJECTED
+  };
+};
