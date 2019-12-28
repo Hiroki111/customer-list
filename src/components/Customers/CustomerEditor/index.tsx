@@ -22,6 +22,9 @@ type InputField = 'name' | 'phone' | 'email' | 'address' | 'group_id' | 'note';
 
 const CustomerEditor = ({
   currentCustomerData,
+  //isLoadingCurrentCustomer,
+  //isCurrentCustomerLoaded,
+  //failedToLoadCurrentCustomer,
   isCreatingCustomer,
   isUpdatingCustomer,
   customerIsCreated,
