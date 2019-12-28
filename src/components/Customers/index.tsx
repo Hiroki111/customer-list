@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import * as _ from 'lodash';
 
 import { CustomerListContainer } from 'components/Customers/CustomerListContainer';
-import { CustomerDetail } from 'components/Customers/CustomerDetail';
 import { CustomerEditor } from 'components/Customers/CustomerEditor';
 import { SearchBox } from 'components/Customers/SearchBox';
 import './styles.scss';
@@ -23,7 +22,6 @@ export const Customers = () => {
 
   return (
     <>
-      <Route exact path="/customers/:id" render={props => <CustomerDetail {...props} handleClose={handleClose} />} />
       <Route
         exact
         path="/customers/edit/:id"
