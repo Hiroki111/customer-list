@@ -1,33 +1,45 @@
 import * as React from 'react';
+import { withRouter, RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
-import { fetchGroups, createCustomer } from 'redux/customerEditor/operations';
+import { fetchCustomer, fetchGroups, createCustomer, updateCustomer } from 'redux/customerEditor/operations';
 import { resetCreatingCustomerStatus } from 'redux/customerEditor/actions';
 import {
+  getCustomer,
   getGroups,
   getIsCreatingCustomer,
-  getCustomerCreated,
-  getCreateCustomerFailed,
-  getCreateCustomerErrorMessages
+  getIsUpdatingCustomer,
+  getCustomerIsCreated,
+  getCustomerIsUpdated,
+  getFailedToCreateCustomer,
+  getFailedToUpdateCustomer,
+  getCustomerCreationErrorMessages,
+  getCustomerUpdateErrorMessages
 } from 'redux/customerEditor/selectors';
-import { ICreateCustomer, IGroup } from 'interfaces/models';
+import { ICustomer, ICreateCustomer, IGroup } from 'interfaces/models';
 import { IState } from 'redux/root';
 
+interface IOwnProps extends RouteComponentProps<{ id: string }> {
+  handleClose: () => void;
+}
+
 interface IReduxProps {
+  currentCustomerData: ICustomer;
   groups: IGroup[];
   isCreatingCustomer: boolean;
-  customerCreated: boolean;
-  createCustomerFailed: boolean;
-  createCustomerErrorMessages: string[];
+  isUpdatingCustomer: boolean;
+  customerIsCreated: boolean;
+  customerIsUpdated: boolean;
+  failedToCreateCustomer: boolean;
+  failedToUpdateCustomer: boolean;
+  customerCreationErrorMessages: string[];
+  customerUpdateErrorMessages: string[];
 }
 
 interface IDispatch {
+  fetchCustomer: (id: number) => void;
   fetchGroups: () => void;
   resetCreatingCustomerStatus: () => void;
   handleSubmit: (customer: ICreateCustomer, callback: () => void) => void;
-}
-
-interface IOwnProps {
-  handleClose: () => void;
 }
 
 export interface IWithReduxProps extends IReduxProps, IDispatch, IOwnProps {}
@@ -41,24 +53,40 @@ const WithRedux = (Component: React.ComponentType<IWithReduxProps>) => {
     componentDidMount() {
       this.props.fetchGroups();
       this.props.resetCreatingCustomerStatus();
+      const id = Number(this.props.match.params.id);
+      this.props.fetchCustomer(id);
     }
   }
 
   const mapDispatchToProps = (dispatch: (action: any) => void): IDispatch => ({
+    fetchCustomer: (id: number) => dispatch(fetchCustomer(id)),
     fetchGroups: () => dispatch(fetchGroups()),
     resetCreatingCustomerStatus: () => dispatch(resetCreatingCustomerStatus()),
-    handleSubmit: (customer: ICreateCustomer, callback: () => void) => dispatch(createCustomer(customer, callback))
+    handleSubmit: (customer: ICreateCustomer, callback: () => void) => {
+      if (customer.id > 0) {
+        dispatch(updateCustomer(customer, callback));
+      } else {
+        dispatch(createCustomer(customer, callback));
+      }
+    }
   });
 
   const mapStateToProps = (state: IState) => ({
+    currentCustomerData: getCustomer(state),
     groups: getGroups(state),
     isCreatingCustomer: getIsCreatingCustomer(state),
-    customerCreated: getCustomerCreated(state),
-    createCustomerFailed: getCreateCustomerFailed(state),
-    createCustomerErrorMessages: getCreateCustomerErrorMessages(state)
+    isUpdatingCustomer: getIsUpdatingCustomer(state),
+    customerIsCreated: getCustomerIsCreated(state),
+    customerIsUpdated: getCustomerIsUpdated(state),
+    failedToCreateCustomer: getFailedToCreateCustomer(state),
+    failedToUpdateCustomer: getFailedToUpdateCustomer(state),
+    customerCreationErrorMessages: getCustomerCreationErrorMessages(state),
+    customerUpdateErrorMessages: getCustomerUpdateErrorMessages(state)
   });
 
-  return connect(mapStateToProps, mapDispatchToProps)(CustomerEditor);
+  const CustomerEditorWithRedux = connect(mapStateToProps, mapDispatchToProps)(CustomerEditor);
+
+  return withRouter(CustomerEditorWithRedux);
 };
 
 export { WithRedux };

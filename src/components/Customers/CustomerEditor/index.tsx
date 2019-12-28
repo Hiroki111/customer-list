@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DropdownButton, Dropdown } from 'react-bootstrap';
 
 import { WithRedux, IWithReduxProps } from 'components/Customers/CustomerEditor/withRedux';
 import { CustomerModal } from 'components/Customers/CustomerModal';
+import { defaultCustomer } from 'redux/customerEditor/reducer';
 import InitialIcon from 'utils/components/InitialIcon';
 import MessageBox from 'utils/components/MessageBox';
 import './styles.scss';
 
-interface ICustomerEditorState {
+interface ICustomerDataState {
+  id: number;
   name: string;
   phone: string;
   email: string;
@@ -19,26 +21,36 @@ interface ICustomerEditorState {
 type InputField = 'name' | 'phone' | 'email' | 'address' | 'group_id' | 'note';
 
 const CustomerEditor = ({
+  currentCustomerData,
   isCreatingCustomer,
-  customerCreated,
-  createCustomerFailed,
-  createCustomerErrorMessages,
+  isUpdatingCustomer,
+  customerIsCreated,
+  customerIsUpdated,
+  failedToCreateCustomer,
+  failedToUpdateCustomer,
+  customerCreationErrorMessages,
+  customerUpdateErrorMessages,
   handleSubmit,
   handleClose,
   groups
 }: IWithReduxProps) => {
-  const defaultCustomerData = {
-    name: '',
-    phone: '',
-    email: '',
-    address: '',
-    note: '',
-    group_id: 0
-  };
-  const [customer, setCustomer] = useState<ICustomerEditorState>(defaultCustomerData);
-  const [groupLabel, setGroupLabel] = useState('Select...');
+  const [customer, setCustomer] = useState<ICustomerDataState>(defaultCustomer);
+  const [groupLabel, setGroupLabel] = useState('N/A');
+
   const defaultDropdownItem = { id: 0, name: 'N/A' };
   const dropdownItems = [defaultDropdownItem].concat(groups);
+  const modalTitle = customer.id > 0 ? 'Edit Customer' : 'Create Customer';
+
+  useEffect(() => {
+    if (currentCustomerData.id !== customer.id) {
+      setCustomer({ ...currentCustomerData });
+    }
+
+    if (groups.length > 0) {
+      const group = dropdownItems.find(group => group.id === customer.group_id) || defaultDropdownItem;
+      setGroupLabel(group.name);
+    }
+  }, [currentCustomerData, groups, customer, defaultDropdownItem, dropdownItems]);
 
   const handleChange = (field: InputField) => (
     e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>
@@ -53,55 +65,62 @@ const CustomerEditor = ({
   };
 
   const handleClickSubmit = () => {
-    handleSubmit(
-      {
-        name: customer.name.trim(),
-        phone: customer.phone.trim() || undefined,
-        email: customer.email.trim() || undefined,
-        address: customer.address.trim() || undefined,
-        note: customer.note.trim() || undefined,
-        group_id: customer.group_id > 0 ? customer.group_id : undefined
-      },
-      () => {
-        setCustomer(defaultCustomerData);
+    const inputData = {
+      id: customer.id,
+      name: customer.name.trim(),
+      phone: customer.phone.trim() || undefined,
+      email: customer.email.trim() || undefined,
+      address: customer.address.trim() || undefined,
+      note: customer.note.trim() || undefined,
+      group_id: customer.group_id > 0 ? customer.group_id : undefined
+    };
+    handleSubmit(inputData, () => {
+      if (customer.id < 1) {
+        setCustomer(defaultCustomer);
         setGroupLabel('N/A');
       }
-    );
+    });
   };
 
-  const showMessage = () => {
-    if (createCustomerFailed) {
+  const showNotification = () => {
+    if (failedToCreateCustomer || failedToUpdateCustomer) {
+      let messages = [] as string[];
+      if (failedToCreateCustomer) {
+        messages = customerCreationErrorMessages;
+      } else if (failedToUpdateCustomer) {
+        messages = customerUpdateErrorMessages;
+      }
+
       return (
-        <div className="customer-editor-row">
-          <MessageBox
-            message={
-              <>
-                <p>It failed to create a customer :</p>
-                <ul>
-                  {createCustomerErrorMessages.map((message, i) => (
-                    <li key={i}>{message}</li>
-                  ))}
-                </ul>
-              </>
-            }
-            variant={'danger'}
-          />
-        </div>
+        <MessageBox
+          message={
+            <>
+              <p>ERROR :</p>
+              <ul>
+                {messages.map((message, i) => (
+                  <li key={i}>{message}</li>
+                ))}
+              </ul>
+            </>
+          }
+          variant={'danger'}
+        />
       );
-    } else if (customerCreated) {
-      return (
-        <div className="customer-editor-row">
-          <MessageBox message={<p>New customer created.</p>} variant={'success'} />
-        </div>
-      );
+    } else if (customerIsCreated || customerIsUpdated) {
+      const message = customer.id > 0 ? 'Customer Updated.' : 'New customer created.';
+      return <MessageBox message={<p>{message}</p>} variant={'success'} />;
     }
     return <></>;
   };
 
   return (
-    <CustomerModal handleClose={handleClose} showLoadingSpinner={isCreatingCustomer} title={'Edit Customer'}>
+    <CustomerModal
+      handleClose={handleClose}
+      showLoadingSpinner={isCreatingCustomer || isUpdatingCustomer}
+      title={modalTitle}
+    >
       <InitialIcon name={customer.name} />
-      {showMessage()}
+      <div className="customer-editor-row">{showNotification()}</div>
       <div className="customer-editor-row">
         <label htmlFor="name">
           <span className="mandatory-field">*</span>Name
