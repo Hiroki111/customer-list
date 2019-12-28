@@ -22,9 +22,8 @@ type InputField = 'name' | 'phone' | 'email' | 'address' | 'group_id' | 'note';
 
 const CustomerEditor = ({
   currentCustomerData,
-  //isLoadingCurrentCustomer,
-  //isCurrentCustomerLoaded,
-  //failedToLoadCurrentCustomer,
+  isLoadingCurrentCustomer,
+  failedToLoadCurrentCustomer,
   isCreatingCustomer,
   isUpdatingCustomer,
   customerIsCreated,
@@ -119,7 +118,8 @@ const CustomerEditor = ({
   return (
     <CustomerModal
       handleClose={handleClose}
-      showLoadingSpinner={isCreatingCustomer || isUpdatingCustomer}
+      showLoadingSpinner={isLoadingCurrentCustomer || isCreatingCustomer || isUpdatingCustomer}
+      showWarning={failedToLoadCurrentCustomer}
       title={modalTitle}
     >
       <InitialIcon name={customer.name} />

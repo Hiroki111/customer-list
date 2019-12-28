@@ -8,6 +8,8 @@ import {
   getGroups,
   getIsCreatingCustomer,
   getIsUpdatingCustomer,
+  getIsLoadingCurrentCustomer,
+  getFailedToLoadCurrentCustomer,
   getCustomerIsCreated,
   getCustomerIsUpdated,
   getFailedToCreateCustomer,
@@ -27,6 +29,8 @@ interface IReduxProps {
   groups: IGroup[];
   isCreatingCustomer: boolean;
   isUpdatingCustomer: boolean;
+  isLoadingCurrentCustomer: boolean;
+  failedToLoadCurrentCustomer: boolean;
   customerIsCreated: boolean;
   customerIsUpdated: boolean;
   failedToCreateCustomer: boolean;
@@ -76,6 +80,8 @@ const WithRedux = (Component: React.ComponentType<IWithReduxProps>) => {
     groups: getGroups(state),
     isCreatingCustomer: getIsCreatingCustomer(state),
     isUpdatingCustomer: getIsUpdatingCustomer(state),
+    isLoadingCurrentCustomer: getIsLoadingCurrentCustomer(state),
+    failedToLoadCurrentCustomer: getFailedToLoadCurrentCustomer(state),
     customerIsCreated: getCustomerIsCreated(state),
     customerIsUpdated: getCustomerIsUpdated(state),
     failedToCreateCustomer: getFailedToCreateCustomer(state),

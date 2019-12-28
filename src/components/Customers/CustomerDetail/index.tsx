@@ -33,6 +33,7 @@ const CustomerDetail = ({
 
   return (
     <CustomerModal
+      showWarning={false}
       handleClose={handleClose}
       title={'Customer Detail'}
       showLoadingSpinner={isLoadingCustomer || isDeletingCustomer}

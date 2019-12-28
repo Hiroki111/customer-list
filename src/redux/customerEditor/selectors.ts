@@ -14,6 +14,11 @@ export const getIsCreatingCustomer = createSelector(
   state => state.status.creatingCustomer === 'PENDING'
 );
 
+export const getIsLoadingCurrentCustomer = createSelector(
+  customerEditorSelector,
+  state => state.status.fetchingCustomer === 'PENDING'
+);
+
 export const getIsUpdatingCustomer = createSelector(
   customerEditorSelector,
   state => state.status.updatingCustomer === 'PENDING'
@@ -32,6 +37,11 @@ export const getCustomerIsUpdated = createSelector(
 export const getFailedToCreateCustomer = createSelector(
   customerEditorSelector,
   state => state.status.creatingCustomer === 'FAILED'
+);
+
+export const getFailedToLoadCurrentCustomer = createSelector(
+  customerEditorSelector,
+  state => state.status.fetchingCustomer === 'FAILED'
 );
 
 export const getFailedToUpdateCustomer = createSelector(

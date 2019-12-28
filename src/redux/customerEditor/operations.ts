@@ -1,4 +1,5 @@
 import { Dispatch, AnyAction } from 'redux';
+import * as _ from 'lodash';
 import * as actions from 'redux/customerEditor/actions';
 import { ICreateCustomer } from 'interfaces/models';
 import { apiBaseUrl } from 'config';
@@ -57,7 +58,7 @@ export const createCustomer = (customer: ICreateCustomer, callback: () => void) 
       callback();
     } catch (error) {
       let messages;
-      if (error.response.data.messages) {
+      if (_.has(error, 'response.data.messages')) {
         messages = Object.keys(error.response.data.messages).map(key => error.response.data.messages[key].join(',  '));
       } else {
         messages = [error.message];
@@ -88,7 +89,7 @@ export const updateCustomer = (customer: ICreateCustomer, callback: () => void) 
       callback();
     } catch (error) {
       let messages;
-      if (error.response.data.messages) {
+      if (_.has(error, 'response.data.messages')) {
         messages = Object.keys(error.response.data.messages).map(key => error.response.data.messages[key].join(',  '));
       } else {
         messages = [error.message];
