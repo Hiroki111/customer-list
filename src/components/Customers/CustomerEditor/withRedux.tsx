@@ -2,6 +2,7 @@ import * as React from 'react';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
 import { fetchCustomer, fetchGroups, createCustomer, updateCustomer } from 'redux/customerEditor/operations';
+import { fetchCustomers } from 'redux/customerList/operations';
 import { resetCreatingCustomerStatus } from 'redux/customerEditor/actions';
 import {
   getCustomer,
@@ -44,6 +45,7 @@ interface IDispatch {
   fetchGroups: () => void;
   resetCreatingCustomerStatus: () => void;
   handleSubmit: (customer: ICreateCustomer, callback: () => void) => void;
+  reloadCustomers: (page: number, keyword: string) => void;
 }
 
 export interface IWithReduxProps extends IReduxProps, IDispatch, IOwnProps {}
@@ -78,7 +80,8 @@ const WithRedux = (Component: React.ComponentType<IWithReduxProps>) => {
       } else {
         dispatch(createCustomer(customer, callback));
       }
-    }
+    },
+    reloadCustomers: (page: number, keyword: string) => dispatch(fetchCustomers(page, keyword))
   });
 
   const mapStateToProps = (state: IState) => ({

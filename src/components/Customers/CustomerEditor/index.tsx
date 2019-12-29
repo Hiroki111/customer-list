@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { DropdownButton, Dropdown } from 'react-bootstrap';
+import * as qs from 'query-string';
 
 import { WithRedux, IWithReduxProps } from 'components/Customers/CustomerEditor/withRedux';
 import { CustomerModal } from 'components/Customers/CustomerModal';
@@ -33,9 +35,11 @@ const CustomerEditor = ({
   customerCreationErrorMessages,
   customerUpdateErrorMessages,
   handleSubmit,
+  reloadCustomers,
   handleClose,
   groups
 }: IWithReduxProps) => {
+  let history = useHistory();
   const [customer, setCustomer] = useState<ICustomerDataState>(defaultCustomer);
   const [groupLabel, setGroupLabel] = useState('N/A');
 
@@ -45,7 +49,15 @@ const CustomerEditor = ({
 
   useEffect(() => {
     if (currentCustomerData.id !== customer.id) {
-      setCustomer({ ...currentCustomerData });
+      setCustomer({
+        id: currentCustomerData.id,
+        name: currentCustomerData.name,
+        phone: currentCustomerData.phone || '',
+        email: currentCustomerData.email || '',
+        address: currentCustomerData.address || '',
+        note: currentCustomerData.note || '',
+        group_id: currentCustomerData.group_id || 0
+      });
     }
 
     if (groups.length > 0) {
@@ -81,6 +93,15 @@ const CustomerEditor = ({
         setCustomer(defaultCustomer);
         setGroupLabel('N/A');
       }
+      let page = qs.parse(history.location.search).page || 1;
+      if (page instanceof Array) {
+        page = page[0];
+      }
+      let keyword = qs.parse(history.location.search).keyword || '';
+      if (keyword instanceof Array) {
+        keyword = keyword[0];
+      }
+      reloadCustomers(Number(page), keyword);
     });
   };
 
