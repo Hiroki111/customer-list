@@ -61,7 +61,7 @@ class CustomerListContainer extends React.Component<IHocProps, ICustomerListStat
             message={
               <>
                 <p>No customer found.</p>
-                <a href="#">Reset the search condition</a>
+                <a href="/#/customers">Reset the search condition</a>
               </>
             }
             variant={'info'}

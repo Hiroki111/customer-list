@@ -16,7 +16,7 @@ interface IReduxProps {
 
 interface IDispatch {
   handleDelete: (id: number, callback: () => void) => void;
-  reloadCustomersList: () => void;
+  reloadCustomers: (page: number, keyword: string) => void;
 }
 
 export interface IWithReduxProps extends IOwnProps, IReduxProps, IDispatch {}
@@ -29,7 +29,7 @@ const WithRedux = (Component: React.ComponentType<IWithReduxProps>) => {
   }
 
   const mapDispatchToProps = (dispatch: (action: any) => void): IDispatch => ({
-    reloadCustomersList: () => dispatch(fetchCustomers()),
+    reloadCustomers: (page: number, keyword: string) => dispatch(fetchCustomers(page, keyword)),
     handleDelete: (id: number, callback: () => void) => dispatch(deleteCustomer(id, callback))
   });
 
