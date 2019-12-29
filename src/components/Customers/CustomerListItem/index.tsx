@@ -26,7 +26,7 @@ const CustomerListItem = ({ id, name, groupName, handleDelete, reloadCustomersLi
 
   return (
     <li className="customerlistitem">
-      <Link to={{ pathname: pathName, state: { goBack: true } }}>
+      <Link to={pathName}>
         <InitialIcon name={name} />
         <div className="names">
           <div className="customer-name">{name}</div>

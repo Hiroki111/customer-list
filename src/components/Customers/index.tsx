@@ -13,14 +13,7 @@ export const Customers = () => {
   const queryParameter = _.get(history, 'location.search', '');
   const pathName = `/customers/edit/-1${queryParameter}`;
 
-  const handleClose = () => {
-    const goBack = _.get(history, 'location.state.goBack', false);
-    if (goBack) {
-      history.goBack();
-    } else {
-      history.push(`/customers${queryParameter}`);
-    }
-  };
+  const handleClose = () => history.push(`/customers${queryParameter}`);
 
   return (
     <>
