@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { DropdownButton, Dropdown } from 'react-bootstrap';
-import * as qs from 'query-string';
 
 import { WithRedux, IWithReduxProps } from 'components/Customers/CustomerEditor/withRedux';
 import { CustomerModal } from 'components/Customers/CustomerModal';
 import { defaultCustomer } from 'redux/customerEditor/reducer';
 import InitialIcon from 'utils/components/InitialIcon';
 import MessageBox from 'utils/components/MessageBox';
+import { getSearchConditions } from 'utils/index';
 import './styles.scss';
 
 interface ICustomerDataState {
@@ -93,15 +93,9 @@ const CustomerEditor = ({
         setCustomer(defaultCustomer);
         setGroupLabel('N/A');
       }
-      let page = qs.parse(history.location.search).page || 1;
-      if (page instanceof Array) {
-        page = page[0];
-      }
-      let keyword = qs.parse(history.location.search).keyword || '';
-      if (keyword instanceof Array) {
-        keyword = keyword[0];
-      }
-      reloadCustomers(Number(page), keyword);
+
+      const { page, keyword } = getSearchConditions(history);
+      reloadCustomers(page, keyword);
     });
   };
 

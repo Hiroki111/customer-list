@@ -2,12 +2,12 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import * as _ from 'lodash';
-import * as qs from 'query-string';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBuilding } from '@fortawesome/free-solid-svg-icons';
 import { SortableElement } from 'react-sortable-hoc';
 import { WithRedux, IWithReduxProps } from 'components/Customers/CustomerListItem/withRedux';
 import InitialIcon from 'utils/components/InitialIcon';
+import { getSearchConditions } from 'utils/index';
 import './styles.scss';
 
 const CustomerListItem = ({ id, name, groupName, handleDelete, reloadCustomers }: IWithReduxProps) => {
@@ -20,15 +20,8 @@ const CustomerListItem = ({ id, name, groupName, handleDelete, reloadCustomers }
     }
 
     handleDelete(id, () => {
-      let page = qs.parse(history.location.search).page || 1;
-      if (page instanceof Array) {
-        page = page[0];
-      }
-      let keyword = qs.parse(history.location.search).keyword || '';
-      if (keyword instanceof Array) {
-        keyword = keyword[0];
-      }
-      reloadCustomers(Number(page), keyword);
+      const { page, keyword } = getSearchConditions(history);
+      reloadCustomers(page, keyword);
     });
   };
 
