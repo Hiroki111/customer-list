@@ -11,8 +11,6 @@ import './styles.scss';
 export const Customers = () => {
   let history = useHistory();
   const queryParameter = _.get(history, 'location.search', '');
-  const pathName = `/customers/edit/-1${queryParameter}`;
-
   const handleClose = () => history.push(`/customers${queryParameter}`);
 
   return (
@@ -24,7 +22,7 @@ export const Customers = () => {
       />
       <div className="action-bar">
         <div className="actions">
-          <Link to={pathName}>Create New Customer</Link>
+          <Link to={`/customers/edit/-1${queryParameter}`}>Create New Customer</Link>
           <SearchBox />
         </div>
       </div>
