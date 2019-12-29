@@ -15,7 +15,7 @@ interface IReduxProps {
 }
 
 interface IDispatch {
-  fetchCustomers: (page: number) => void;
+  fetchCustomers: (page: number, keyword: string) => void;
 }
 
 export interface IHocProps extends RouteComponentProps<{ page: string }>, IReduxProps, IDispatch {}
@@ -27,26 +27,35 @@ export const Hoc = (Component: React.ComponentType<IHocProps>) => {
     }
 
     componentDidMount() {
-      this.props.fetchCustomers(this.getPageNuber());
+      this.props.fetchCustomers(this.getPageNuber(), this.getKeyword());
     }
 
     componentDidUpdate(prevProps: IHocProps) {
       if (
-        this.props.location.search !== prevProps.location.search && // page number
+        this.props.location.search !== prevProps.location.search && // page number and search keyword
         this.props.location.pathname === prevProps.location.pathname
       ) {
-        this.props.fetchCustomers(this.getPageNuber());
+        this.props.fetchCustomers(this.getPageNuber(), this.getKeyword());
       }
     }
 
     getPageNuber(): number {
-      const page = qs.parse(this.props.location.search).page || 1;
+      const page = qs.parse(this.props.location.search).page || '1';
       return Number(page);
+    }
+
+    getKeyword(): string {
+      const keyword = qs.parse(this.props.location.search).keyword || '';
+      if (keyword instanceof Array) {
+        return keyword[0];
+      } else {
+        return keyword;
+      }
     }
   }
 
   const mapDispatchToProps = (dispatch: (action: any) => void): IDispatch => ({
-    fetchCustomers: (page: number) => dispatch(fetchCustomers(page))
+    fetchCustomers: (page: number, keyword: string) => dispatch(fetchCustomers(page, keyword))
   });
 
   const mapStateToProps = (state: IState) => ({
