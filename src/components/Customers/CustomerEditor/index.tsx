@@ -22,49 +22,33 @@ interface ICustomerDataState {
 
 type InputField = 'name' | 'phone' | 'email' | 'address' | 'group_id' | 'note';
 
-const CustomerEditor = ({
-  currentCustomerData,
-  isLoadingCurrentCustomer,
-  failedToLoadCurrentCustomer,
-  isCreatingCustomer,
-  isUpdatingCustomer,
-  customerIsCreated,
-  customerIsUpdated,
-  failedToCreateCustomer,
-  failedToUpdateCustomer,
-  customerCreationErrorMessages,
-  customerUpdateErrorMessages,
-  handleSubmit,
-  reloadCustomers,
-  handleClose,
-  groups
-}: IWithReduxProps) => {
+const CustomerEditor = (props: IWithReduxProps) => {
   let history = useHistory();
   const [customer, setCustomer] = useState<ICustomerDataState>(defaultCustomer);
   const [groupLabel, setGroupLabel] = useState('N/A');
 
   const defaultDropdownItem = { id: 0, name: 'N/A' };
-  const dropdownItems = [defaultDropdownItem].concat(groups);
+  const dropdownItems = [defaultDropdownItem].concat(props.groups);
   const modalTitle = customer.id > 0 ? 'Edit Customer' : 'Create Customer';
 
   useEffect(() => {
-    if (currentCustomerData.id !== customer.id) {
+    if (props.currentCustomerData.id !== customer.id) {
       setCustomer({
-        id: currentCustomerData.id,
-        name: currentCustomerData.name,
-        phone: currentCustomerData.phone || '',
-        email: currentCustomerData.email || '',
-        address: currentCustomerData.address || '',
-        note: currentCustomerData.note || '',
-        group_id: currentCustomerData.group_id || 0
+        id: props.currentCustomerData.id,
+        name: props.currentCustomerData.name,
+        phone: props.currentCustomerData.phone || '',
+        email: props.currentCustomerData.email || '',
+        address: props.currentCustomerData.address || '',
+        note: props.currentCustomerData.note || '',
+        group_id: props.currentCustomerData.group_id || 0
       });
     }
 
-    if (groups.length > 0) {
+    if (props.groups.length > 0) {
       const group = dropdownItems.find(group => group.id === customer.group_id) || defaultDropdownItem;
       setGroupLabel(group.name);
     }
-  }, [currentCustomerData, groups, customer, defaultDropdownItem, dropdownItems]);
+  }, [props, customer, defaultDropdownItem, dropdownItems]);
 
   const handleChange = (field: InputField) => (
     e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>
@@ -88,25 +72,20 @@ const CustomerEditor = ({
       note: customer.note.trim() || undefined,
       group_id: customer.group_id > 0 ? customer.group_id : undefined
     };
-    handleSubmit(inputData, () => {
+    props.handleSubmit(inputData, () => {
       if (customer.id < 1) {
         setCustomer(defaultCustomer);
         setGroupLabel('N/A');
       }
 
       const { page, keyword } = getSearchConditions(history);
-      reloadCustomers(page, keyword);
+      props.reloadCustomers(page, keyword);
     });
   };
 
   const showNotification = () => {
-    if (failedToCreateCustomer || failedToUpdateCustomer) {
-      let messages = [] as string[];
-      if (failedToCreateCustomer) {
-        messages = customerCreationErrorMessages;
-      } else if (failedToUpdateCustomer) {
-        messages = customerUpdateErrorMessages;
-      }
+    if (props.failedToCreateCustomer || props.failedToUpdateCustomer) {
+      const messages = props.customerCreationErrorMessages.concat(props.customerUpdateErrorMessages);
 
       return (
         <MessageBox
@@ -123,7 +102,7 @@ const CustomerEditor = ({
           variant={'danger'}
         />
       );
-    } else if (customerIsCreated || customerIsUpdated) {
+    } else if (props.customerIsCreated || props.customerIsUpdated) {
       const message = customer.id > 0 ? 'Customer Updated.' : 'New customer created.';
       return <MessageBox message={<p>{message}</p>} variant={'success'} />;
     }
@@ -132,9 +111,9 @@ const CustomerEditor = ({
 
   return (
     <CustomerModal
-      handleClose={handleClose}
-      showLoadingSpinner={isLoadingCurrentCustomer || isCreatingCustomer || isUpdatingCustomer}
-      showWarning={failedToLoadCurrentCustomer}
+      handleClose={props.handleClose}
+      showLoadingSpinner={props.isLoadingCurrentCustomer || props.isCreatingCustomer || props.isUpdatingCustomer}
+      showWarning={props.failedToLoadCurrentCustomer}
       title={modalTitle}
     >
       <InitialIcon name={customer.name} />
@@ -172,7 +151,7 @@ const CustomerEditor = ({
         <textarea name="note" id="note" value={customer.note} onChange={handleChange('note')} />
       </div>
       <div className="footer">
-        <button onClick={handleClose}>Cancel</button>
+        <button onClick={props.handleClose}>Cancel</button>
         <button className="submit-button" onClick={handleClickSubmit}>
           Submit
         </button>

@@ -4,20 +4,7 @@ import { connect } from 'react-redux';
 import { fetchCustomer, fetchGroups, createCustomer, updateCustomer } from 'redux/customerEditor/operations';
 import { fetchCustomers } from 'redux/customerList/operations';
 import { resetCreatingCustomerStatus } from 'redux/customerEditor/actions';
-import {
-  getCustomer,
-  getGroups,
-  getIsCreatingCustomer,
-  getIsUpdatingCustomer,
-  getIsLoadingCurrentCustomer,
-  getFailedToLoadCurrentCustomer,
-  getCustomerIsCreated,
-  getCustomerIsUpdated,
-  getFailedToCreateCustomer,
-  getFailedToUpdateCustomer,
-  getCustomerCreationErrorMessages,
-  getCustomerUpdateErrorMessages
-} from 'redux/customerEditor/selectors';
+import * as selectors from 'redux/customerEditor/selectors';
 import { ICustomer, ICreateCustomer, IGroup } from 'interfaces/models';
 import { IState } from 'redux/root';
 
@@ -85,18 +72,18 @@ const WithRedux = (Component: React.ComponentType<IWithReduxProps>) => {
   });
 
   const mapStateToProps = (state: IState) => ({
-    currentCustomerData: getCustomer(state),
-    groups: getGroups(state),
-    isCreatingCustomer: getIsCreatingCustomer(state),
-    isUpdatingCustomer: getIsUpdatingCustomer(state),
-    isLoadingCurrentCustomer: getIsLoadingCurrentCustomer(state),
-    failedToLoadCurrentCustomer: getFailedToLoadCurrentCustomer(state),
-    customerIsCreated: getCustomerIsCreated(state),
-    customerIsUpdated: getCustomerIsUpdated(state),
-    failedToCreateCustomer: getFailedToCreateCustomer(state),
-    failedToUpdateCustomer: getFailedToUpdateCustomer(state),
-    customerCreationErrorMessages: getCustomerCreationErrorMessages(state),
-    customerUpdateErrorMessages: getCustomerUpdateErrorMessages(state)
+    currentCustomerData: selectors.getCustomer(state),
+    groups: selectors.getGroups(state),
+    isCreatingCustomer: selectors.getIsCreatingCustomer(state),
+    isUpdatingCustomer: selectors.getIsUpdatingCustomer(state),
+    isLoadingCurrentCustomer: selectors.getIsLoadingCurrentCustomer(state),
+    failedToLoadCurrentCustomer: selectors.getFailedToLoadCurrentCustomer(state),
+    customerIsCreated: selectors.getCustomerIsCreated(state),
+    customerIsUpdated: selectors.getCustomerIsUpdated(state),
+    failedToCreateCustomer: selectors.getFailedToCreateCustomer(state),
+    failedToUpdateCustomer: selectors.getFailedToUpdateCustomer(state),
+    customerCreationErrorMessages: selectors.getCustomerCreationErrorMessages(state),
+    customerUpdateErrorMessages: selectors.getCustomerUpdateErrorMessages(state)
   });
 
   const CustomerEditorWithRedux = connect(mapStateToProps, mapDispatchToProps)(CustomerEditor);
