@@ -6,7 +6,7 @@ import './styles.scss';
 
 interface MessageBoxI {
   message: JSX.Element;
-  variant: 'success' | 'danger';
+  variant: 'success' | 'danger' | 'info';
   heading?: string;
 }
 

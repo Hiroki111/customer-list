@@ -45,11 +45,26 @@ class CustomerListContainer extends React.Component<IHocProps, ICustomerListStat
 
     if (failedToLoadCustomers) {
       return (
-        <div className="customerlistcontainer-message-wrapper">
+        <div className="customer-list-container-message-wrapper">
           <MessageBox
             message={<p>Due to an internal error, customers were not loaded. Please try again later.</p>}
             variant={'danger'}
-            heading={'ERROR'}
+          />
+        </div>
+      );
+    }
+
+    if (customers.length < 1) {
+      return (
+        <div className="customer-list-container-message-wrapper">
+          <MessageBox
+            message={
+              <>
+                <p>No customer found.</p>
+                <a href="#">Reset the search condition</a>
+              </>
+            }
+            variant={'info'}
           />
         </div>
       );
@@ -66,7 +81,7 @@ class CustomerListContainer extends React.Component<IHocProps, ICustomerListStat
 
   render() {
     return (
-      <div className="customerlistcontainer">
+      <div className="customer-list-container">
         {this.displayCustomerList()}
         <Pagination />
       </div>
