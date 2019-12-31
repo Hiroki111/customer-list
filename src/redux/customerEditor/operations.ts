@@ -41,6 +41,14 @@ export const fetchGroups = () => {
   };
 };
 
+export const saveCustomer = (customer: ICreateCustomer, callback: () => void) => {
+  if (customer.id < 0) {
+    return createCustomer(customer, callback);
+  } else {
+    return updateCustomer(customer, callback);
+  }
+};
+
 export const createCustomer = (customer: ICreateCustomer, callback: () => void) => {
   return async (dispatch: Dispatch<AnyAction>) => {
     dispatch(actions.createCustomer());

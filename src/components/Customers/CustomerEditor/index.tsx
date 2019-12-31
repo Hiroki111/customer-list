@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { DropdownButton, Dropdown } from 'react-bootstrap';
-
 import { WithRedux, IWithReduxProps } from 'components/Customers/CustomerEditor/withRedux';
 import { CustomerModal } from 'components/Customers/CustomerModal';
 import { defaultCustomer } from 'redux/customerEditor/reducer';
@@ -84,16 +83,14 @@ const CustomerEditor = (props: IWithReduxProps) => {
   };
 
   const showNotification = () => {
-    if (props.failedToCreateCustomer || props.failedToUpdateCustomer) {
-      const messages = props.customerCreationErrorMessages.concat(props.customerUpdateErrorMessages);
-
+    if (props.failedToSaveCustomer) {
       return (
         <MessageBox
           message={
             <>
               <p>ERROR :</p>
               <ul>
-                {messages.map((message, i) => (
+                {props.errorMessages.map((message, i) => (
                   <li key={i}>{message}</li>
                 ))}
               </ul>
@@ -102,7 +99,7 @@ const CustomerEditor = (props: IWithReduxProps) => {
           variant={'danger'}
         />
       );
-    } else if (props.customerIsCreated || props.customerIsUpdated) {
+    } else if (props.customerIsSaved) {
       const message = customer.id > 0 ? 'Customer Updated.' : 'New customer created.';
       return <MessageBox message={<p>{message}</p>} variant={'success'} />;
     }
@@ -112,7 +109,7 @@ const CustomerEditor = (props: IWithReduxProps) => {
   return (
     <CustomerModal
       handleClose={props.handleClose}
-      showLoadingSpinner={props.isLoadingCurrentCustomer || props.isCreatingCustomer || props.isUpdatingCustomer}
+      showLoadingSpinner={props.isLoadingCurrentCustomer || props.isSavingCustomer}
       showWarning={props.failedToLoadCurrentCustomer}
       title={modalTitle}
     >
@@ -152,7 +149,7 @@ const CustomerEditor = (props: IWithReduxProps) => {
       </div>
       <div className="footer">
         <button onClick={props.handleClose}>Cancel</button>
-        <button className="submit-button" onClick={handleClickSubmit}>
+        <button className="submit-button" onClick={handleClickSubmit} disabled={customer.name.length < 1}>
           Submit
         </button>
       </div>
@@ -162,4 +159,4 @@ const CustomerEditor = (props: IWithReduxProps) => {
 
 const CustomerEditorWithRedux = WithRedux(CustomerEditor);
 
-export { CustomerEditorWithRedux as CustomerEditor };
+export { CustomerEditorWithRedux as CustomerEditor, CustomerEditor as DisconnectedCustomerEditor };
