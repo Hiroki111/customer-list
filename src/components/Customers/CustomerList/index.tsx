@@ -5,7 +5,7 @@ import { CustomerListItem } from 'components/Customers/CustomerListItem';
 import { ICustomer } from 'interfaces/models';
 import './styles.scss';
 
-const CustomerList = SortableContainer(({ customers }: { customers: ICustomer[] }) => {
+const CustomerList = ({ customers }: { customers: ICustomer[] }) => {
   return (
     <ul className="customerlist">
       {customers.map((customer, i) => (
@@ -19,6 +19,8 @@ const CustomerList = SortableContainer(({ customers }: { customers: ICustomer[] 
       ))}
     </ul>
   );
-});
+};
 
-export { CustomerList };
+const SortableCustomerList = SortableContainer(CustomerList);
+
+export { SortableCustomerList as CustomerList, CustomerList as DisconnectedCustomerList };
