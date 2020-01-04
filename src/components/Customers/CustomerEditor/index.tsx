@@ -43,11 +43,11 @@ const CustomerEditor = (props: IWithReduxProps) => {
       });
     }
 
-    if (props.groups.length > 0) {
-      const group = dropdownItems.find(group => group.id === customer.group_id) || defaultDropdownItem;
+    const group = dropdownItems.find(group => group.id === Number(customer.group_id)) || defaultDropdownItem;
+    if (group.name !== groupLabel) {
       setGroupLabel(group.name);
     }
-  }, [props, customer, defaultDropdownItem, dropdownItems]);
+  }, [props, customer, groupLabel, defaultDropdownItem, dropdownItems]);
 
   const handleChange = (field: InputField) => (
     e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>
@@ -57,11 +57,11 @@ const CustomerEditor = (props: IWithReduxProps) => {
 
   const handleSelectDropDown = (eventKey: string) => {
     const group = dropdownItems[Number(eventKey)] || defaultDropdownItem;
-    setGroupLabel(group.name);
     setCustomer({ ...customer, group_id: group.id });
   };
 
-  const handleClickSubmit = () => {
+  const handleClickSubmit = (e: React.FormEvent<EventTarget>) => {
+    e.preventDefault();
     const inputData = {
       id: customer.id,
       name: customer.name.trim(),
@@ -69,7 +69,7 @@ const CustomerEditor = (props: IWithReduxProps) => {
       email: customer.email.trim() || undefined,
       address: customer.address.trim() || undefined,
       note: customer.note.trim() || undefined,
-      group_id: customer.group_id > 0 ? customer.group_id : undefined
+      group_id: customer.group_id
     };
     props.handleSubmit(inputData, () => {
       if (customer.id < 1) {
@@ -113,46 +113,48 @@ const CustomerEditor = (props: IWithReduxProps) => {
       showWarning={props.failedToLoadCurrentCustomer}
       title={modalTitle}
     >
-      <InitialIcon name={customer.name} />
-      <div className="customer-editor-row">{showNotification()}</div>
-      <div className="customer-editor-row">
-        <label htmlFor="name">
-          <span className="mandatory-field">*</span>Name
-        </label>
-        <input type="text" name="name" id="name" value={customer.name} onChange={handleChange('name')} />
-      </div>
-      <div className="customer-editor-row">
-        <label htmlFor="phone">Phone</label>
-        <input type="text" name="phone" id="phone" value={customer.phone} onChange={handleChange('phone')} />
-      </div>
-      <div className="customer-editor-row">
-        <label htmlFor="email">Email</label>
-        <input type="email" name="email" id="email" value={customer.email} onChange={handleChange('email')} />
-      </div>
-      <div className="customer-editor-row">
-        <label htmlFor="address">Address</label>
-        <input type="text" name="address" id="address" value={customer.address} onChange={handleChange('address')} />
-      </div>
-      <div className="customer-editor-row">
-        <label htmlFor="group_id">Group</label>
-        <DropdownButton id="group_id" className="dropdown" variant="outline-secondary" title={groupLabel}>
-          {dropdownItems.map((item, i) => (
-            <Dropdown.Item key={i} eventKey={i.toString()} onSelect={handleSelectDropDown}>
-              {item.name}
-            </Dropdown.Item>
-          ))}
-        </DropdownButton>
-      </div>
-      <div className="customer-editor-row">
-        <label htmlFor="note">Note</label>
-        <textarea name="note" id="note" value={customer.note} onChange={handleChange('note')} />
-      </div>
-      <div className="footer">
-        <button onClick={props.handleClose}>Cancel</button>
-        <button className="submit-button" onClick={handleClickSubmit} disabled={customer.name.length < 1}>
-          Submit
-        </button>
-      </div>
+      <form onSubmit={handleClickSubmit}>
+        <InitialIcon name={customer.name} />
+        <div className="customer-editor-row">{showNotification()}</div>
+        <div className="customer-editor-row">
+          <label htmlFor="name">
+            <span className="mandatory-field">*</span>Name
+          </label>
+          <input type="text" name="name" id="name" value={customer.name} onChange={handleChange('name')} required />
+        </div>
+        <div className="customer-editor-row">
+          <label htmlFor="phone">Phone</label>
+          <input type="text" name="phone" id="phone" value={customer.phone} onChange={handleChange('phone')} />
+        </div>
+        <div className="customer-editor-row">
+          <label htmlFor="email">Email</label>
+          <input type="email" name="email" id="email" value={customer.email} onChange={handleChange('email')} />
+        </div>
+        <div className="customer-editor-row">
+          <label htmlFor="address">Address</label>
+          <input type="text" name="address" id="address" value={customer.address} onChange={handleChange('address')} />
+        </div>
+        <div className="customer-editor-row">
+          <label htmlFor="group_id">Group</label>
+          <DropdownButton id="group_id" className="dropdown" variant="outline-secondary" title={groupLabel}>
+            {dropdownItems.map((item, i) => (
+              <Dropdown.Item key={i} eventKey={i.toString()} onSelect={handleSelectDropDown}>
+                {item.name}
+              </Dropdown.Item>
+            ))}
+          </DropdownButton>
+        </div>
+        <div className="customer-editor-row">
+          <label htmlFor="note">Note</label>
+          <textarea name="note" id="note" value={customer.note} onChange={handleChange('note')} />
+        </div>
+        <div className="footer">
+          <button onClick={props.handleClose}>Cancel</button>
+          <button className="submit-button" type="submit">
+            Submit
+          </button>
+        </div>
+      </form>
     </CustomerModal>
   );
 };

@@ -1,61 +1,72 @@
-.customer-editor-row {
-  width: 90%;
-  margin-bottom: 0.5rem;
+form {
+  width: 100%;
   display: flex;
+  align-items: center;
+  flex-direction: column;
 
-  label {
-    width: 20%;
-    padding-right: 0.5rem;
-    text-align: right;
-    margin: 0;
+  .customer-editor-row {
+    width: 90%;
+    margin-bottom: 0.5rem;
+    display: flex;
 
-    .mandatory-field {
-      color: red;
-      font-weight: 700;
+    label {
+      width: 20%;
+      padding-right: 0.5rem;
+      text-align: right;
+      margin: 0;
+
+      .mandatory-field {
+        color: red;
+        font-weight: 700;
+      }
     }
-  }
 
-  input,
-  textarea {
-    width: 75%;
-    padding-right: 0.25rem;
-    padding-left: 0.25rem;
-  }
+    input,
+    textarea {
+      width: 75%;
+      padding-right: 0.25rem;
+      padding-left: 0.25rem;
+    }
 
-  .dropdown {
-    width: 75%;
-    display: inline-block;
+    textarea {
+      height: 7rem;
+    }
 
-    .btn-outline-secondary:hover {
+    .dropdown {
+      width: 75%;
+      display: inline-block;
+
+      .btn-outline-secondary:hover {
+        color: black;
+        background-color: white;
+      }
+
+      .btn-outline-secondary:focus {
+        box-shadow: 0 0 0 0 white;
+      }
+
+      .dropdown-menu {
+        height: auto;
+        max-height: 200px;
+        width: 100%;
+        overflow-x: hidden;
+      }
+
+      button {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-radius: 0;
+        color: black;
+      }
+    }
+
+    .btn-outline-secondary:not(:disabled):not(.disabled).active,
+    .btn-outline-secondary:not(:disabled):not(.disabled):active,
+    .show > .btn-outline-secondary.dropdown-toggle {
       color: black;
       background-color: white;
     }
-
-    .btn-outline-secondary:focus {
-      box-shadow: 0 0 0 0 white;
-    }
-
-    .dropdown-menu {
-      height: auto;
-      max-height: 200px;
-      width: 100%;
-      overflow-x: hidden;
-    }
-
-    button {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-radius: 0;
-      color: black;
-    }
-  }
-
-  .btn-outline-secondary:not(:disabled):not(.disabled).active,
-  .btn-outline-secondary:not(:disabled):not(.disabled):active,
-  .show>.btn-outline-secondary.dropdown-toggle {
-    color: black;
-    background-color: white;
   }
 }

@@ -1,3 +1,3 @@
 export const customerListPageSize = '10';
 
-export const apiBaseUrl = 'http://customer-list-api-test/api';
+export const apiBaseUrl = 'https://customer-list-api.hiroki-t.me/api';
