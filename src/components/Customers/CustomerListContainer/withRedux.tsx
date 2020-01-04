@@ -2,7 +2,6 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router';
 import * as qs from 'query-string';
-
 import { fetchCustomers } from 'redux/customerList/operations';
 import { ICustomer } from 'interfaces/models';
 import { getCustomers, getIsLoadingCustomers, getFailedToLoadCustomers } from 'redux/customerList/selectors';
@@ -18,10 +17,10 @@ interface IDispatch {
   fetchCustomers: (page: number, keyword: string) => void;
 }
 
-export interface IHocProps extends RouteComponentProps<{ page: string }>, IReduxProps, IDispatch {}
+export interface IWithReduxProps extends RouteComponentProps<{ page: string }>, IReduxProps, IDispatch {}
 
-export const Hoc = (Component: React.ComponentType<IHocProps>) => {
-  class CustomerList extends React.Component<IHocProps> {
+export const WithRedux = (Component: React.ComponentType<IWithReduxProps>) => {
+  class CustomerList extends React.Component<IWithReduxProps> {
     render() {
       return <Component {...this.props} />;
     }
@@ -30,7 +29,7 @@ export const Hoc = (Component: React.ComponentType<IHocProps>) => {
       this.props.fetchCustomers(this.getPageNuber(), this.getKeyword());
     }
 
-    componentDidUpdate(prevProps: IHocProps) {
+    componentDidUpdate(prevProps: IWithReduxProps) {
       if (
         this.props.location.search !== prevProps.location.search && // page number and search keyword
         this.props.location.pathname === prevProps.location.pathname

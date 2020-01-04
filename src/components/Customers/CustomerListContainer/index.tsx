@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { CustomerList } from 'components/Customers/CustomerList';
 import { Pagination } from 'components/Customers/Pagination';
-import { Hoc, IHocProps } from 'components/Customers/CustomerListContainer/hoc';
+import { WithRedux, IWithReduxProps } from 'components/Customers/CustomerListContainer/withRedux';
 import { ICustomer } from 'interfaces/models';
 import LoadingSpinner from 'utils/components/LoadingSpinner';
 import MessageBox from 'utils/components/MessageBox';
@@ -19,12 +19,12 @@ interface IOnSortEnd {
   newIndex: number;
 }
 
-class CustomerListContainer extends React.Component<IHocProps, ICustomerListState> {
+class CustomerListContainer extends React.Component<IWithReduxProps, ICustomerListState> {
   state = {
     customers: [] as ICustomer[]
   };
 
-  componentDidUpdate(prevProps: IHocProps) {
+  componentDidUpdate(prevProps: IWithReduxProps) {
     if (this.props.customers !== prevProps.customers) {
       this.setState({ customers: this.props.customers });
     }
@@ -89,6 +89,6 @@ class CustomerListContainer extends React.Component<IHocProps, ICustomerListStat
   }
 }
 
-const CustomerListContainerConnected = Hoc(CustomerListContainer);
+const CustomerListContainerConnected = WithRedux(CustomerListContainer);
 
 export { CustomerListContainerConnected as CustomerListContainer };
