@@ -91,4 +91,7 @@ class CustomerListContainer extends React.Component<IWithReduxProps, ICustomerLi
 
 const CustomerListContainerConnected = WithRedux(CustomerListContainer);
 
-export { CustomerListContainerConnected as CustomerListContainer };
+export {
+  CustomerListContainerConnected as CustomerListContainer,
+  CustomerListContainer as DisconnectedCustomerListContainer
+};
