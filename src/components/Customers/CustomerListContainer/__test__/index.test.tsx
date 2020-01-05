@@ -19,10 +19,6 @@ const baseMatch: match<{ page: string }> = {
   params: { page: '1' }
 };
 
-jest.mock('react-router-dom', () => ({
-  useHistory: jest.fn()
-}));
-
 jest.spyOn(React, 'useEffect').mockImplementation(fn => fn());
 
 describe('CustomerListContainer', () => {

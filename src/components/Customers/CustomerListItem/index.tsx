@@ -1,6 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import * as _ from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBuilding } from '@fortawesome/free-solid-svg-icons';
@@ -38,7 +37,9 @@ const CustomerListItem = ({ id, name, groupName, handleDelete, reloadCustomers }
         </div>
       </Link>
       <div className="customerlistitem-icon">
-        <button onClick={onClickDelete}>DELETE</button>
+        <button className="delete-button" onClick={onClickDelete}>
+          DELETE
+        </button>
       </div>
     </li>
   );
@@ -47,4 +48,4 @@ const CustomerListItem = ({ id, name, groupName, handleDelete, reloadCustomers }
 const CustomerListItemWithRedux = WithRedux(CustomerListItem);
 const SortableCustomerListItemWithRedux = SortableElement(CustomerListItemWithRedux);
 
-export { SortableCustomerListItemWithRedux as CustomerListItem };
+export { SortableCustomerListItemWithRedux as CustomerListItem, CustomerListItem as DisconnectedCustomerListItem };
