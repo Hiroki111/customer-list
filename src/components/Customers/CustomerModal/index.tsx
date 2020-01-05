@@ -1,7 +1,6 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 import MessageBox from 'utils/components/MessageBox';
 import LoadingSpinner from 'utils/components/LoadingSpinner';
 import './styles.scss';
