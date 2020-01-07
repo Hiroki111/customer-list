@@ -14,10 +14,10 @@ interface IDispatch {
   fetchCustomers: (page: number) => void;
 }
 
-export interface IHocProps extends IReduxProps, IDispatch {}
+export interface IWithReduxProps extends IReduxProps, IDispatch {}
 
-const Hoc = (Component: React.ComponentType<IHocProps>) => {
-  class Pagination extends React.Component<IHocProps> {
+const WithRedux = (Component: React.ComponentType<IWithReduxProps>) => {
+  class Pagination extends React.Component<IWithReduxProps> {
     render() {
       return <Component {...this.props} />;
     }
@@ -36,4 +36,4 @@ const Hoc = (Component: React.ComponentType<IHocProps>) => {
   return connect(mapStateToProps, mapDispatchToProps)(Pagination);
 };
 
-export { Hoc };
+export { WithRedux };

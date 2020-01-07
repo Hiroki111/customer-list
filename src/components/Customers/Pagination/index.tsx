@@ -2,11 +2,10 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import * as qs from 'query-string';
-
-import { Hoc, IHocProps } from 'components/Customers/Pagination/hoc';
+import { WithRedux, IWithReduxProps } from 'components/Customers/Pagination/withRedux';
 import './styles.scss';
 
-const Pagination = ({ totalPage, isLoadingCustomers, currentPage }: IHocProps) => {
+const Pagination = ({ totalPage, isLoadingCustomers, currentPage }: IWithReduxProps) => {
   let history = useHistory();
 
   const handlePageChange = (selectedItem: { selected: number }) => {
@@ -35,6 +34,6 @@ const Pagination = ({ totalPage, isLoadingCustomers, currentPage }: IHocProps) =
   );
 };
 
-const PaginationHoc = Hoc(Pagination);
+const PaginationWithRedux = WithRedux(Pagination);
 
-export { PaginationHoc as Pagination, Pagination as DisconnectedPagination };
+export { PaginationWithRedux as Pagination, Pagination as DisconnectedPagination };
