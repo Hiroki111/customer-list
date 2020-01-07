@@ -34,12 +34,12 @@ const SearchBox = ({ isLoadingCustomers }: IWithReduxProps) => {
   };
 
   return (
-    <div className="search-box" onKeyDown={handleKeyDown}>
-      <input value={keyword} onChange={handleChangeInput} placeholder="Enter name..." />
-      <button className="submit-search-box-botton" onClick={handleClickSearch} disabled={isLoadingCustomers}>
+    <div className='search-box' onKeyDown={handleKeyDown}>
+      <input value={keyword} onChange={handleChangeInput} placeholder='Enter name...' />
+      <button className='submit-search-box-botton' onClick={handleClickSearch} disabled={isLoadingCustomers}>
         Search
       </button>
-      <button onClick={handleClickReset} disabled={isLoadingCustomers}>
+      <button className='reset-search-box-botton' onClick={handleClickReset} disabled={isLoadingCustomers}>
         Reset
       </button>
     </div>
