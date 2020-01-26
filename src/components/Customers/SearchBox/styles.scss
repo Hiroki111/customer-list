@@ -1,3 +1,5 @@
+@import 'scss/abstracts/mixins';
+
 .search-box {
   display: flex;
   align-items: center;
@@ -5,7 +7,6 @@
   input {
     box-sizing: border-box;
     padding: 0.5rem;
-    font-size: 1rem;
     border: 1px solid rgba(0, 0, 0, 0.125);
     width: 80%;
   }
@@ -14,22 +15,21 @@
     box-sizing: border-box;
     width: 20%;
     padding: 0.5rem;
-    font-size: 1rem;
     background-color: white;
     border: 1px solid rgba(0, 0, 0, 0.125);
     border-left: none;
     cursor: pointer;
   }
 
-  @media only screen and (max-width: 600px) {
+  @include respond(phone) {
     input {
       padding: 0.5rem;
-      font-size: 0.875rem;
+      font-size: 87.5%;
     }
-  
+
     button {
       padding: 0.5rem;
-      font-size: 0.875rem;
+      font-size: 87.5%;
     }
   }
 }
