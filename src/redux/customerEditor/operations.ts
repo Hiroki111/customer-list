@@ -11,14 +11,10 @@ export const fetchCustomer = (id: number) => {
     try {
       const result = await axios({
         method: 'get',
-        url: `${apiBaseUrl}/customers/${id}`
+        url: `${apiBaseUrl}/customers/${id}`,
       });
 
-      dispatch(
-        actions.fetchCustomerFulfilled({
-          customer: result.data.data
-        })
-      );
+      dispatch(actions.fetchCustomerFulfilled({ customer: result.data.data }));
     } catch (error) {
       alert('Internal error occurred. Please try again later.');
       dispatch(actions.fetchCustomerRejected(error));
@@ -32,7 +28,7 @@ export const fetchGroups = () => {
     try {
       const result = await axios({
         method: 'get',
-        url: `${apiBaseUrl}/groups`
+        url: `${apiBaseUrl}/groups`,
       });
       dispatch(actions.fetchGroupsFulfilled({ groups: result.data.data }));
     } catch (error) {
@@ -59,15 +55,17 @@ export const createCustomer = (customer: ICreateCustomer, callback: () => void) 
         data: customer,
         headers: {
           'Content-Type': 'application/json',
-          Accept: 'application/json'
-        }
+          Accept: 'application/json',
+        },
       });
       dispatch(actions.createCustomerFulfilled());
       callback();
     } catch (error) {
       let messages;
       if (_.has(error, 'response.data.messages')) {
-        messages = Object.keys(error.response.data.messages).map(key => error.response.data.messages[key].join(',  '));
+        messages = Object.keys(error.response.data.messages).map((key) =>
+          error.response.data.messages[key].join(',  ')
+        );
       } else {
         messages = [error.message];
       }
@@ -86,19 +84,21 @@ export const updateCustomer = (customer: ICreateCustomer, callback: () => void) 
         data: customer,
         headers: {
           'Content-Type': 'application/json',
-          Accept: 'application/json'
-        }
+          Accept: 'application/json',
+        },
       });
       dispatch(
         actions.updateCustomerFulfilled({
-          customer: result.data.data
+          customer: result.data.data,
         })
       );
       callback();
     } catch (error) {
       let messages;
       if (_.has(error, 'response.data.messages')) {
-        messages = Object.keys(error.response.data.messages).map(key => error.response.data.messages[key].join(',  '));
+        messages = Object.keys(error.response.data.messages).map((key) =>
+          error.response.data.messages[key].join(',  ')
+        );
       } else {
         messages = [error.message];
       }
