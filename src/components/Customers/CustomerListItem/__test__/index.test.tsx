@@ -6,7 +6,9 @@ import { DisconnectedCustomerListItem } from 'components/Customers/CustomerListI
 configure({ adapter: new Adapter() });
 
 jest.mock('react-router-dom', () => ({
-  useHistory: jest.fn()
+  // without the line below, `Link` won't be retrieved proprerly from react-router-dom
+  ...jest.requireActual('react-router-dom'),
+  useHistory: jest.fn(),
 }));
 
 describe('CustomerListItem', () => {
@@ -16,7 +18,7 @@ describe('CustomerListItem', () => {
     groupName: 'N/A',
     isDeletingCustomer: false,
     handleDelete: jest.fn(),
-    reloadCustomers: jest.fn()
+    reloadCustomers: jest.fn(),
   };
 
   it("renders the person's name and its orginization name", () => {
