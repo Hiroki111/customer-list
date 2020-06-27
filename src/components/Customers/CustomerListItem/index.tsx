@@ -9,7 +9,14 @@ import InitialIcon from 'utils/components/InitialIcon';
 import { getSearchConditions } from 'utils/index';
 import './styles.scss';
 
-const CustomerListItem = ({ id, name, groupName, handleDelete, reloadCustomers }: IWithReduxProps) => {
+const CustomerListItem = ({
+  id,
+  name,
+  groupName,
+  handleDelete,
+  reloadCustomers,
+  isDeletingCustomer,
+}: IWithReduxProps) => {
   const history = useHistory();
   const queryParameter = _.get(history, 'location.search', '');
   const pathName = `/customers/edit/${id}${queryParameter}`;
@@ -37,7 +44,7 @@ const CustomerListItem = ({ id, name, groupName, handleDelete, reloadCustomers }
         </div>
       </Link>
       <div className="customerlistitem-icon">
-        <button className="delete-button" onClick={onClickDelete}>
+        <button className="delete-button" onClick={onClickDelete} disabled={isDeletingCustomer}>
           DELETE
         </button>
       </div>

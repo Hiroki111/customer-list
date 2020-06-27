@@ -30,11 +30,11 @@ const WithRedux = (Component: React.ComponentType<IWithReduxProps>) => {
 
   const mapDispatchToProps = (dispatch: (action: any) => void): IDispatch => ({
     reloadCustomers: (page: number, keyword: string) => dispatch(fetchCustomers(page, keyword)),
-    handleDelete: (id: number, callback: () => void) => dispatch(deleteCustomer(id, callback))
+    handleDelete: (id: number, callback: () => void) => dispatch(deleteCustomer(id, callback)),
   });
 
   const mapStateToProps = (state: IState): IReduxProps => ({
-    isDeletingCustomer: getIsDeletingCustomer(state)
+    isDeletingCustomer: getIsDeletingCustomer(state),
   });
 
   return connect(mapStateToProps, mapDispatchToProps)(CustomerListItem);
