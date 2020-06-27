@@ -1,19 +1,15 @@
 import { Dispatch, AnyAction } from 'redux';
 import * as _ from 'lodash';
+
 import * as actions from 'redux/customerEditor/actions';
 import { ICreateCustomer } from 'interfaces/models';
-import { apiBaseUrl } from 'config';
-import axios from 'axios';
+import restApi from 'restApi';
 
 export const fetchCustomer = (id: number) => {
   return async (dispatch: Dispatch<AnyAction>) => {
     dispatch(actions.fetchCustomer());
     try {
-      const result = await axios({
-        method: 'get',
-        url: `${apiBaseUrl}/customers/${id}`,
-      });
-
+      const result = await restApi.fetchCustomer(id);
       dispatch(actions.fetchCustomerFulfilled({ customer: result.data.data }));
     } catch (error) {
       alert('Internal error occurred. Please try again later.');
@@ -26,10 +22,7 @@ export const fetchGroups = () => {
   return async (dispatch: Dispatch<AnyAction>) => {
     dispatch(actions.fetchGroups());
     try {
-      const result = await axios({
-        method: 'get',
-        url: `${apiBaseUrl}/groups`,
-      });
+      const result = await restApi.fetchGroups();
       dispatch(actions.fetchGroupsFulfilled({ groups: result.data.data }));
     } catch (error) {
       dispatch(actions.fetchGroupsRejected());
@@ -49,15 +42,7 @@ export const createCustomer = (customer: ICreateCustomer, callback: () => void) 
   return async (dispatch: Dispatch<AnyAction>) => {
     dispatch(actions.createCustomer());
     try {
-      await axios({
-        method: 'post',
-        url: `${apiBaseUrl}/customers`,
-        data: customer,
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-      });
+      await restApi.createCustomer(customer);
       dispatch(actions.createCustomerFulfilled());
       callback();
     } catch (error) {
@@ -78,20 +63,8 @@ export const updateCustomer = (customer: ICreateCustomer, callback: () => void) 
   return async (dispatch: Dispatch<AnyAction>) => {
     dispatch(actions.updateCustomer());
     try {
-      const result = await axios({
-        method: 'put',
-        url: `${apiBaseUrl}/customers/${customer.id}`,
-        data: customer,
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-      });
-      dispatch(
-        actions.updateCustomerFulfilled({
-          customer: result.data.data,
-        })
-      );
+      const result = await restApi.updateCustomer(customer);
+      dispatch(actions.updateCustomerFulfilled({ customer: result.data.data }));
       callback();
     } catch (error) {
       let messages;
