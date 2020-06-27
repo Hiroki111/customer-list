@@ -10,7 +10,7 @@ export const fetchCustomer = (id: number) => {
     dispatch(actions.fetchCustomer());
     try {
       const result = await restApi.fetchCustomer(id);
-      dispatch(actions.fetchCustomerFulfilled({ customer: result.data.data }));
+      dispatch(actions.fetchCustomerFulfilled({ customer: result.data.customer }));
     } catch (error) {
       alert('Internal error occurred. Please try again later.');
       dispatch(actions.fetchCustomerRejected(error));
@@ -23,7 +23,7 @@ export const fetchGroups = () => {
     dispatch(actions.fetchGroups());
     try {
       const result = await restApi.fetchGroups();
-      dispatch(actions.fetchGroupsFulfilled({ groups: result.data.data }));
+      dispatch(actions.fetchGroupsFulfilled({ groups: result.data.groups }));
     } catch (error) {
       dispatch(actions.fetchGroupsRejected());
     }
@@ -64,7 +64,7 @@ export const updateCustomer = (customer: ICreateCustomer, callback: () => void) 
     dispatch(actions.updateCustomer());
     try {
       const result = await restApi.updateCustomer(customer);
-      dispatch(actions.updateCustomerFulfilled({ customer: result.data.data }));
+      dispatch(actions.updateCustomerFulfilled({ customer: result.data.customer }));
       callback();
     } catch (error) {
       let messages;
