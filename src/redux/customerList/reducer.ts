@@ -19,8 +19,8 @@ export const defaults = {
   currentPage: 0,
   status: {
     fetchingCustomers: '' as Status,
-    deletingCustomer: '' as Status
-  }
+    deletingCustomer: '' as Status,
+  },
 };
 
 export const customerListReducer = (state: ICustomerListState = defaults, action: AnyAction) => {
@@ -28,7 +28,7 @@ export const customerListReducer = (state: ICustomerListState = defaults, action
     case types.FETCH_CUSTOMERS: {
       return {
         ...state,
-        status: { ...state.status, fetchingCustomers: 'PENDING' as Status }
+        status: { ...state.status, fetchingCustomers: 'PENDING' as Status },
       };
     }
 
@@ -38,44 +38,35 @@ export const customerListReducer = (state: ICustomerListState = defaults, action
         customers: action.payload.customers,
         totalCustomers: action.payload.totalCustomers,
         currentPage: action.payload.currentPage,
-        status: { ...state.status, fetchingCustomers: 'OK' as Status }
+        status: { ...state.status, fetchingCustomers: 'OK' as Status },
       };
     }
 
     case types.FETCH_CUSTOMERS_REJECTED: {
       return {
         ...state,
-        status: { ...state.status, fetchingCustomers: 'FAILED' as Status }
+        status: { ...state.status, fetchingCustomers: 'FAILED' as Status },
       };
     }
 
     case types.DELETE_CUSTOMER: {
       return {
         ...state,
-        status: {
-          ...state.status,
-          deletingCustomer: 'PENDING' as Status
-        }
+        status: { ...state.status, deletingCustomer: 'PENDING' as Status },
       };
     }
 
     case types.DELETE_CUSTOMER_FULFILLED: {
       return {
         ...state,
-        status: {
-          ...state.status,
-          deletingCustomer: 'OK' as Status
-        }
+        status: { ...state.status, deletingCustomer: 'OK' as Status },
       };
     }
 
     case types.DELETE_CUSTOMER_REJECTED: {
       return {
         ...state,
-        status: {
-          ...state.status,
-          deletingCustomer: 'FAILED' as Status
-        }
+        status: { ...state.status, deletingCustomer: 'FAILED' as Status },
       };
     }
   }

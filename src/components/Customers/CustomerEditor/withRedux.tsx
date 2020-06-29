@@ -42,14 +42,7 @@ const WithRedux = (Component: React.ComponentType<IWithReduxProps>) => {
     componentDidMount() {
       this.props.fetchGroups();
       this.props.resetCreatingCustomerStatus();
-      let id;
-      const idString = this.props.match.params.id;
-      if (idString.includes('?')) {
-        id = Number(idString.substr(0, idString.indexOf('?')));
-      } else {
-        id = Number(idString);
-      }
-      this.props.fetchCustomer(id);
+      this.props.fetchCustomer(Number(this.props.match.params.id));
     }
   }
 
@@ -58,7 +51,7 @@ const WithRedux = (Component: React.ComponentType<IWithReduxProps>) => {
     fetchGroups: () => dispatch(fetchGroups()),
     resetCreatingCustomerStatus: () => dispatch(resetCreatingCustomerStatus()),
     handleSubmit: (customer: ICreateCustomer, callback: () => void) => dispatch(saveCustomer(customer, callback)),
-    reloadCustomers: (page: number, keyword: string) => dispatch(fetchCustomers(page, keyword))
+    reloadCustomers: (page: number, keyword: string) => dispatch(fetchCustomers(page, keyword)),
   });
 
   const mapStateToProps = (state: IState) => ({
@@ -69,7 +62,7 @@ const WithRedux = (Component: React.ComponentType<IWithReduxProps>) => {
     failedToLoadCurrentCustomer: selectors.getFailedToLoadCurrentCustomer(state),
     customerIsSaved: selectors.getCustomerIsSaved(state),
     failedToSaveCustomer: selectors.getFailedToSaveCustomer(state),
-    errorMessages: selectors.getErrorMessages(state)
+    errorMessages: selectors.getErrorMessages(state),
   });
 
   const CustomerEditorWithRedux = connect(mapStateToProps, mapDispatchToProps)(CustomerEditor);
